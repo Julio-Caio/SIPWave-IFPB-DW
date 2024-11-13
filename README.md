@@ -4,17 +4,17 @@ Hello, Dev! How are things going? Have you had your little coffee today?
 
 **SIPWave is a web application designed to facilitate the creation and management of SIP-based communication systems, such as IP PBX solutions, VoIP gateways, and conference servers.**
 
-<br>
-<center><img src="./public/preview/image-project.png" width="80%" height="70%" style="margin-top:0.8em" /></center>
-<br>
-<center><img src="./public/preview/preview-login.png" width="80%" height="70%" style="margin-top:0.8em" /></center>
-
 ## Pages:
 
 - [Home](https://camillypsouza.github.io/SIPWave-IFPB-DW/public/pages/homepage/)
 - [Register](https://camillypsouza.github.io/SIPWave-IFPB-DW/public/pages/register/)
 - [Login](https://camillypsouza.github.io/SIPWave-IFPB-DW/public/pages/login/)
 - [Domains](https://camillypsouza.github.io/SIPWave-IFPB-DW/public/pages/domain_sip/)
+
+<br>
+<center><img src="./public/preview/image-project.png" width="80%" height="70%" style="margin-top:0.8em" /></center>
+<br>
+<center><img src="./public/preview/preview-login.png" width="80%" height="70%" style="margin-top:0.8em" /></center>
 
 ## Features:
 
@@ -41,7 +41,7 @@ Hello, Dev! How are things going? Have you had your little coffee today?
 
 <a href="https://github.com/Julio-Caio"><b>Júlio Caio</b></a>
 
-[![Linkedin Badge](https://img.shields.io/badge/-Júlio-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/j%C3%BAlio-caio-r-santos-4a2798235)](https://www.linkedin.com/in/j%C3%BAlio-caio-r-santos-4a2798235) [![Gmail Badge](https://img.shields.io/badge/-julio.caio@academico.ifpb.edu.br-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:julio.caio@academico.ifpb.edu.br)](mailto:julio.caio@academico.ifpb.edu.br)
+[![Linkedin Badge](https://img.shields.io/badge/-Júlio-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/julio-caio-r-santos)](https://www.linkedin.com/in/julio-caio-r-santos) [![Gmail Badge](https://img.shields.io/badge/-julio.caio@academico.ifpb.edu.br-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:caio.julio@academico.ifpb.edu.br)](mailto:caio.julio@academico.ifpb.edu.br)
 
 <a href="https://github.com/camillypsouza"><b>Camilly Souza</b></a>
 
