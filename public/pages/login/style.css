@@ -38,7 +38,7 @@ body::after {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(161, 161, 161, 0.075);
+  background: rgba(161, 161, 161, 0.302);
   z-index: -1;
 }
 
