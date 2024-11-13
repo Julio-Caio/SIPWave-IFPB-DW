@@ -7,8 +7,6 @@ Hello, Dev! How are things going? Have you had your little coffee today?
 <br>
 <center><img src="./public/preview/image-project.png" width="80%" height="70%" style="margin-top:0.8em" /></center>
 <br>
-<center><img src="./public/preview/register-page.png" width="80%" height="70%" style="margin-top:0.8em" /></center>
-
 <center><img src="./public/preview/preview-login.png" width="80%" height="70%" style="margin-top:0.8em" /></center>
 
 ## Pages:
