@@ -2,11 +2,15 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.4em;
+  padding: 1em;
   background-color: transparent;
   color: #f5f5f5;
-  text-align: center;
-  font-size: 1.075em;
+  font-size: .9em;
+}
+
+.footer-bg-dark{
+  background-color: rgba(31, 31, 31, 0.788);
+  justify-content: center;
 }
 
 a {
@@ -19,6 +23,7 @@ a:hover {
 }
 
 .footer_markdown p {
+  padding: 1.5em;
   color: rgb(245, 245, 245);
 }
 
