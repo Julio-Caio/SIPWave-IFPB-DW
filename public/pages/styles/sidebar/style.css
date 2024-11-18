@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Sankofa+Display&display=swap");
+
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidebar.active {
+  width: 15em;
+}
+
+.bi.bi-list {
+  font-size: 1.4em;
+}
+
+.sidebar a {
+  border-radius: 0.4em;
+  padding: 1em;
+  margin: 1.2em 0.6em 0.8em;
+  max-height: 4em;
+  max-width: 75%;
+  text-decoration: none;
+  padding: 1em 1.4em 1.2em;
+  color: #818181;
+  display: block;
+  transition: all 0.6s ease-in-out;
+}
+
+.sidebar a:hover {
+  background-color: #f1f1f1;
+  color: black;
+  font-weight: 600;
+}
+
+.sidebar span {
+  cursor: pointer;
+  color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+#main {
+  transition: margin-left 0.5s;
+  padding: 16px;
+}
+
+.navbar-toggler {
+  border: none;
+  color: white;
+}
+
+.navbar-toggler:hover {
+  color: #ccc;
+}

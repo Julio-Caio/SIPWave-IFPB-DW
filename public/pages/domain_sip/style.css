@@ -16,28 +16,25 @@
     box-sizing: border-box;
 }
 
-
-html, body {
-    font-size: 1.075em;
-    height: 100%;
-    margin: 0;
-    background: rgba(240, 238, 233, 0.952);
-    padding: 0;
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
-.navbar-brand {
-    text-decoration: none;
+.container {
+  flex: 1;
+  padding-bottom: 5%;
+  margin-bottom: 8%;
 }
 
-.navbar-brand:hover {
-    text-decoration: none;
-    color: #35978d;
-}
-
-/* Container principal */
+/* Estilo do container principal */
 #container {
-    min-height: 85%;
-    padding-bottom: 5%;
+    min-height: 70vh; /* Ajuste para telas grandes */
+    padding-bottom: 2%;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Estilo da tabela */
@@ -61,21 +58,16 @@ a {
 }
 
 a:hover {
-    text-decoration: underline;
+    text-decoration: none;
 }
 
+/* Footer */
 footer {
-  margin-top: 2.9em;
-  min-height: 20%;
-  padding: 1em;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.4em;
-  background: var(--color-dark-grey);
-  color: #f5f5f5;
+  margin-top: auto; /* Força o footer a ficar no final */
   text-align: center;
   font-size: 1.075em;
+  padding: 1em;
+  background-color: var(--color-dark-grey);
 }
 
 .footer_markdown p {
@@ -110,7 +102,7 @@ i {
     }
 
     .container .table {
-        width: 44em;
+        width: 50%;
         min-height: 16em;
         font-size: 1.2em;
     }
