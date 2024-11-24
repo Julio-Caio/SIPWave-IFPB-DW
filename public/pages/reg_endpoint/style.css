@@ -112,17 +112,18 @@ i {
     }
 }
 
-/* Media query para telas pequenas (até 480px) */
-@media (max-width: 480px) {
-    footer {
-      display: block;
-    }
-}
+/* Media query para telas mobiles (entre 481px e 768px) */
 
-/* Media query para telas médias (entre 481px e 768px) */
-@media (min-width: 481px) and (max-width: 768px) {
+@media (min-width: 360px) and (max-width: 1024px) {
   footer {
     display: block;
     text-align: center;
   }
+
+  td.text-center i {
+      display: block;
+      margin: 1em;
+      width: 2em;
+      height: 2em;
+    }
 }

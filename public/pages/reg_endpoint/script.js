@@ -38,6 +38,39 @@ async function populateTable() {
   });
 }
 
+// Função para adicionar novo elemento na tabela
+
+function insertNew() {
+  const addButton = document.getElementById("addButton");
+
+  addButton.addEventListener("click", () => {
+    const extension = document.getElementById("ext-id").value;
+    const addr = document.getElementById("address-domain").value;
+    const uri = document.getElementById("uri-register").value;
+    const proxySIP = document.getElementById("ext-proxyserver").value;
+    const passwd = document.getElementById("ext-passwd").value;
+
+    if (extension && addr && uri && proxySIP) {
+      data.push({
+        extension: extension,
+        domain: addr,
+        uri: uri,
+        proxySIP: proxySIP,
+        password: passwd
+      });
+
+      // Atualizar tabela
+      populateTable();
+
+      document.getElementById("ext-id").value = "";
+      document.getElementById("address-domain").value = "";
+      document.getElementById("uri-register").value = "";
+      document.getElementById("ext-proxyserver").value = "";
+    }
+    else alert("Por favor, preencha todos os campos antes de adicionar.");
+  });
+}
+
 // Pedir confirmação antes do elemento ser excluído
 
 function openDelModal(index) {
@@ -76,6 +109,7 @@ function saveEdit(index) {
   const updatedDomain = document.getElementById("editDomain").value;
   const updatedURI = document.getElementById("editURI").value;
   const updatedProxy = document.getElementById("editProxy").value;
+  const updatedPassword = document.getElementById("editPasswd").value;
 
   if (updatedExtension && updatedURI && updatedDomain && updatedProxy) {
     data[index] = {
@@ -83,6 +117,7 @@ function saveEdit(index) {
       uri: updatedURI,
       domain: updatedDomain,
       proxySIP: updatedProxy,
+      password: updatedPassword
     };
 
     populateTable();
@@ -91,3 +126,4 @@ function saveEdit(index) {
 }
 
 populateTable();
+insertNew()
