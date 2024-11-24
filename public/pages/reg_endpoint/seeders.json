@@ -1,0 +1,16 @@
+[
+        {
+            "id": 1,
+            "extension": "0001",
+            "domain": "ifpb.edu.br",
+            "uri": "sip:0001@ifpb.edu.br",
+            "proxySIP": "200.129.77.237"
+        },
+        {
+            "id": 2,
+            "extension": "0010",
+            "uri": "sip:0010@domain.com.br",
+            "domain": "domain.com.br",
+            "proxySIP": "192.168.0.224"
+        }
+]
