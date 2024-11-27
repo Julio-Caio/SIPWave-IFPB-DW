@@ -54,7 +54,6 @@ h2 {
 }
 
 .link-custom {
-    transform: translateX(-80%);
     margin-bottom: 2em;
     font-weight: bolder;
     color: var(--color-dark-cian);
@@ -195,6 +194,13 @@ form fieldset {
     border-radius: 0.4em;
     margin: 0.8em 0.8em 0.8em;
   }
+
+  .link-custom {
+    margin-bottom: 2em;
+    transform: translateX(-75%);
+    font-weight: bolder;
+    color: var(--color-dark-cian);
+  }
 }
 
 @media (min-width: 1920px) {
@@ -250,18 +256,22 @@ a:hover {
 }
 
 @media (max-width: 480px) {
-.form-signup input,
-.form-signin input {
-  position: relative;
-  padding: 0.4em;
-  width: 19em;
-  height: 3em;
-  border: none;
-  border-radius: 0.3em;
-  color: whitesmoke;
-  background: var(--color-dark-grey);
-  transition: box-shadow 0.3s ease, border 0.3s ease;
-}
+
+  fieldset {
+    padding: 0 1.2em 1.2em 0;
+  }
+
+  .form-signup input,
+  .form-signin input {
+    position: relative;
+    padding: 0.4em;
+    width: 16em;
+    height: 3em;
+    border: none;
+    border-radius: 0.3em;
+    color: whitesmoke;
+    transition: box-shadow 0.3s ease, border 0.3s ease;
+  }
 }
 
 footer {

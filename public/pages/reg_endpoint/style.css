@@ -112,6 +112,8 @@ i {
     }
 }
 
+/* Media query para telas mobiles (entre 481px e 768px) */
+
 @media (min-width: 360px) and (max-width: 1024px) {
   footer {
     display: block;

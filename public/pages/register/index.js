@@ -1,3 +1,5 @@
+// Validar e-mail
+
 document.getElementById("inputEmail").addEventListener("input", function () {
     const emailField = this;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -17,4 +19,23 @@ document.getElementById("inputEmail").addEventListener("input", function () {
       }
     }
   });
-  
+
+// Validar se as senhas são iguais
+
+  const passwdInput = document.getElementById("inputPassword");
+  const confirmPasswdInput = document.getElementById("inputRepeatPassword");
+  const feedbackDiv = document.getElementById("feedback");
+
+  confirmPasswdInput.addEventListener("input", () => {
+    const confirmPassword = confirmPasswdInput.value;
+
+    if (confirmPassword === passwdInput.value) {
+      confirmPasswdInput.classList.remove("error");
+      confirmPasswdInput.classList.add("success");
+      feedbackDiv.textContent = "";
+    } else {
+      confirmPasswdInput.classList.remove("success");
+      confirmPasswdInput.classList.add("error");
+      feedbackDiv.textContent = "Passwords do not match";
+    }
+});

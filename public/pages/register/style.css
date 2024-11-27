@@ -37,7 +37,7 @@ body::after {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.6);
   z-index: -1;
 }
 
@@ -60,7 +60,7 @@ form fieldset {
   border-radius: 0.8em;
   max-width: 28em;
   padding: 4em;
-  backdrop-filter: blur(1em);
+  backdrop-filter: blur(1.2em);
 }
 
 form fieldset h1 {
@@ -154,6 +154,18 @@ form fieldset h1 {
   outline: none;
   border-color: var(--color-light-cian);
   box-shadow: 0 0 8px rgba(8, 177, 160, 0.8);
+}
+
+.success {
+  border: .8px solid rgb(16, 196, 91);
+}
+.error {
+  border: .6px solid red;
+}
+.feedback {
+  font-size: 0.9em;
+  color: red;
+  margin-top: 5px;
 }
 
 /* Estilo da logo */
