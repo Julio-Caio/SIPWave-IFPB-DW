@@ -21,7 +21,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-image: url("../images/bg/bg-domains.jpg");
+  background-image: url("../images/bg/bg-contacts.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }

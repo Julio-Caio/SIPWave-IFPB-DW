@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SIPWave - SIP Domain</title>
+  <title>SIPWave - Contacts</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css"
     rel="stylesheet">
@@ -28,7 +28,7 @@
         <input
           type="search"
           class="form-control ps-5 p-2"
-          placeholder="Search domains..."
+          placeholder="Search contacts..."
         />
         <i
           class="fa-solid fa-magnifying-glass position-absolute top-50 start-3 translate-middle-y mx-3 text-light"
@@ -67,7 +67,7 @@
  <!-- Main Content -->
  <div class="container table-responsive p-3" id="container">
   <!-- Button add new domain -->
-  <h1 class="mt-5 text-center fs-2 fw-bold text-light">Domains</h1>
+  <h1 class="mt-5 text-center fs-2 fw-bold text-light">Contacts</h1>
   <div class="d-flex justify-content-md-end mb-3">
     <button type="button" class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#Modal">
       <i class="bi bi-plus"></i> New
@@ -79,26 +79,22 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5 fw-bold" id="ModalLabel">Add new domain</h1>
+          <h1 class="modal-title fs-5 fw-bold" id="ModalLabel">Add new contact</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form class="row">
             <div class="col-6">
-              <label for="address-domain" class="fw-bold p-2">Address</label>
-              <input type="text" class="form-control" id="address-domain" placeholder="my-domain.com">
-            </div>
-            <div class="col-6">
-              <label for="tag" class="fw-bold p-2">Proxy SIP Server</label>
-              <input type="text" class="form-control" id="proxysip" placeholder="192.168.0.0">
+              <label for="name" class="fw-bold p-2">Name</label>
+              <input type="text" class="form-control" id="name" placeholder="Juliet">
             </div>
             <div class="col-6 mt-2">
-              <label for="tag" class="fw-bold p-2">Tag</label>
-              <input type="text" class="form-control" id="tag" placeholder="Some description">
+              <label for="endsip" class="fw-bold p-2">EnderecoSIP</label>
+              <input type="text" class="form-control" id="endsip" placeholder="juliet@domain.com">
             </div>
             <div class="col-6 mt-2">
-              <label for="tag" class="fw-bold p-2">Status</label>
-              <input type="text" class="form-control" id="status" placeholder="Active">
+              <label for="number" class="fw-bold p-2">Number</label>
+              <input type="text" class="form-control" id="number" placeholder="(xx) xxxxxxxxx">
             </div>
           </form>
         </div>
@@ -115,26 +111,22 @@
   <div class="modal-dialog">
       <div class="modal-content">
           <div class="modal-header">
-              <h1 class="modal-title fs-5 fw-bold" id="editModalLabel">Edit SIP Domain</h1>
+              <h1 class="modal-title fs-5 fw-bold" id="editModalLabel">Edit Name</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
               <form class="row">
                   <div class="col-6">
-                      <label for="editDomain" class="fw-bold p-2">SIP Domain</label>
-                      <input type="text" class="form-control" id="editDomain">
+                      <label for="editName" class="fw-bold p-2">Name</label>
+                      <input type="text" class="form-control" id="editName">
                   </div>
                   <div class="col-6">
-                      <label for="editURI" class="fw-bold p-2">Tag</label>
-                      <input type="text" class="form-control" id="editTag">
+                      <label for="editURI" class="fw-bold p-2">Endereco SIP</label>
+                      <input type="text" class="form-control" id="editEndSip">
                   </div>
                   <div class="col-6">
                       <label for="editProxy" class="fw-bold p-2">Proxy SIP Server</label>
                       <input type="text" class="form-control" id="editProxy">
-                  </div>
-                  <div class="col-6 mt-2">
-                      <label for="editPasswd" class="fw-bold p-2">Status</label>
-                      <input type="password" class="form-control" id="editStatus">
                   </div>
               </form>
           </div>
@@ -156,7 +148,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-              Are you sure you want to delete this entry?
+              Are you sure you want to delete this Contact?
           </div>
           <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -170,17 +162,17 @@
     <table class="table table-dark table-striped" style="width: 100%;">
       <thead class="table-dark">
         <tr>
-          <th scope="col" class="text-center" style="width: 15%;">#</th>
-          <th scope="col" class="text-center" style="width: 15%;">Domain</th>
-          <th scope="col" class="text-center" style="width: 15%;">Tag</th>
-          <th scope="col" class="text-center" style="width: 15%;">ProxySIP</th>
-          <th scope="col" class="text-center" style="width: 15%;">Register</th>
-          <th scope="col" class="text-center" style="width: 15%;"></th>
+            <th scope="col" class="text-center" style="width: 14%;">Status</th>
+            <th scope="col" class="text-center" style="width: 20%;">Username</th>
+            <th scope="col" class="text-center" style="width: 20%;">User URI</th>
+            <th scope="col" class="text-center" style="width: 20%;">Number</th>
+            <th scope="col" class="text-center" style="width: 10%;">Call</th>
+            <th scope="col" class="text-center" style="width: 24%;"></th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <th scope="row" class="text-center">1</th>
+          <th scope="row" class="text-center">julio</th>
           <td class="text-center">ifpb.edu.br</td>
           <td class="text-center">First Domain</td>
           <td class="text-center">192.168.1.1</td>
@@ -189,20 +181,22 @@
             <i class="rounded-1 bi bi-pencil-square mx-3 bg-primary text-light p-1"></i>
             <i class="rounded-1 bi bi-trash3-fill bg-danger text-light p-1"></i>
           </td>
+          <td class="text-center"><i class="bi bi-telephone"></td>
         </tr>
         <tr>
-          <th scope="row" class="text-center">2</th>
+          <th scope="row" class="text-center">camilly</th>
           <td class="text-center">example.org</td>
           <td class="text-center">Backup</td>
           <td class="text-center">192.168.1.2</td>
-          <td class="text-center">Inactive</td>
           <td class="text-center">
             <i class="rounded-1 bi bi-pencil-square mx-3 bg-primary text-light p-1"></i>
             <i class="rounded-1 bi bi-trash3-fill bg-danger text-light p-1"></i>
+            <i class="bi bi-telephone"></i>
+
           </td>
         </tr>
         <tr>
-          <th scope="row" class="text-center">3</th>
+          <th scope="row" class="text-center">Nelson</th>
           <td class="text-center">ftp.debian.org</td>
           <td class="text-center">Testing</td>
           <td class="text-center">192.168.1.3</td>
@@ -210,6 +204,7 @@
           <td class="text-center">
             <i class="rounded-1 bi bi-pencil-square mx-3 bg-primary text-light p-1"></i>
             <i class="rounded-1 bi bi-trash3-fill bg-danger text-light p-1"></i>
+            <i class="bi bi-telephone"></i>
           </td>
         </tr>
       </tbody>
