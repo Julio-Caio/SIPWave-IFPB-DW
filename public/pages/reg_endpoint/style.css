@@ -21,6 +21,8 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  background-image: url("../images/bg/Bg-ExtensionLine.jpg");
+  background-size: cover;
 }
 
 .container {
