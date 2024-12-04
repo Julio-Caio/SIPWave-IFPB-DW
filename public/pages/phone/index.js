@@ -5,9 +5,20 @@ const { maskNumber, sanitizeInput } = maskPhone;
 const MAX_LENGTH = 15; 
 const ALLOWED_KEYS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '#'];
 
+let isTypingWithKeyboard = false;
+
 document.addEventListener('DOMContentLoaded', initializeInput);
+document.addEventListener('focus', () => {
+    isTypingWithKeyboard = false; })
 document.addEventListener('keydown', handleKeydown);
 document.addEventListener('keyup', handleKeyup);
+
+document.getElementById('displayInput').addEventListener('input', (event) => {
+    if (!isTypingWithKeyboard) {
+        isTypingWithKeyboard = true;
+        updateInputValue(event.target);
+    }
+});
 
 function initializeInput() {
     const displayInput = getDisplayInput();
