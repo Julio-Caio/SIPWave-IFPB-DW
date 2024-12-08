@@ -172,6 +172,16 @@ body::after {
   font-size: 4.2em;
 }
 
+canvas {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; 
+}
+
 .about_project {
   padding: 0 2.5em 5em;
   min-height: 24em;
