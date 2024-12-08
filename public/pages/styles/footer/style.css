@@ -51,6 +51,7 @@ a:hover {
 @media (max-width: 480px) {
   footer {
     display: block;
+    text-align: center;
   }
 }
 
