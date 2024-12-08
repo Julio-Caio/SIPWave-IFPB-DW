@@ -21,6 +21,9 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  background-image: url("../images/bg/bg-domains.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .container {
@@ -124,4 +127,20 @@ i {
       width: 2em;
       height: 2em;
     }
+}
+/* rolagem da tabela */
+.table-container {
+  overflow-x: auto; 
+  overflow-y: auto;
+  border-radius: 10px; 
+}
+
+/* esconder a barra de rolagem */
+.table-container::-webkit-scrollbar {
+  display: none; 
+}
+
+.table-container {
+  -ms-overflow-style: none;  /* Para o Internet Explorer 10+ */
+  scrollbar-width: none;     /* Para Firefox */
 }

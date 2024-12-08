@@ -21,7 +21,8 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-image: url("../images/bg/Bg-ExtensionLine.jpg");
+  background-image: url("../images/bg/bg-contacts.jpg");
+  background-repeat: no-repeat;
   background-size: cover;
 }
 
@@ -72,6 +73,31 @@ footer {
   background-color: var(--color-dark-grey);
 }
 
+.footer_markdown p {
+  color: rgb(245, 245, 245);
+}
+
+.footer_markdown span {
+  text-decoration: underline;
+  color: var(--color-light-cian);
+}
+
+.footer_copyright p {
+  color: var(--color-light-cian);
+}
+
+.footer_ifpb img {
+  transform: scale(.7);
+}
+
+.footer_ifpb p {
+  color: var(--color-light-cian);
+}
+
+i {
+  cursor: pointer;
+}
+
 /* Media query para telas grandes */
 @media (min-width: 1920px) {
     .navbar-brand {
@@ -89,8 +115,6 @@ footer {
     }
 }
 
-/* Media query para telas mobiles (entre 481px e 768px) */
-
 @media (min-width: 360px) and (max-width: 1024px) {
   footer {
     display: block;
@@ -103,4 +127,20 @@ footer {
       width: 2em;
       height: 2em;
     }
+}
+/* rolagem da tabela */
+.table-container {
+  overflow-x: auto; 
+  overflow-y: auto;
+  border-radius: 10px; 
+}
+
+/* esconder a barra de rolagem */
+.table-container::-webkit-scrollbar {
+  display: none; 
+}
+
+.table-container {
+  -ms-overflow-style: none;  /* Para o Internet Explorer 10+ */
+  scrollbar-width: none;     /* Para Firefox */
 }
