@@ -1,0 +1,148 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+main {
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 44em;
+  padding: 4em;
+  background-color:transparent;
+  border-radius: .3em;
+  text-align: center;
+}
+
+.keyboard {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Keyboard Numeric */
+
+.dialpad {
+  padding: 2em;
+  margin-left: .4em;
+  margin-right: .8em;
+  background-color: #0a0a0a;
+  border-radius: .6em;
+}
+
+.dial-button {
+  padding: 1em;
+  width: 4em;
+  height: 4em;
+  margin: .2em;
+  font-size: 1.6em;
+  color: #fff;
+  background: linear-gradient(145deg, #3b3b3b, #292929);
+  border: 1px solid rgb(12, 136, 99);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.dial-button.hover {
+  background: rgb(0, 0, 0);
+  transform: scale(1.08);
+  transition: all 0.2s ease-in-out;
+}
+
+
+.dial-button.active {
+  background: rgba(0, 0, 0, 0.2);
+  transform: scale(0.95);
+  transition: all 0.1s ease-in-out;
+}
+
+/* Display */
+
+#displayInput {
+  background-color: #252525;
+  color: #fff;
+  font-size: 1.4em;
+  border-radius: .4em;
+}
+
+#displayInput::placeholder {
+  color: #5a5a5a;
+}
+
+/* Button */
+
+.call-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2em
+}
+
+.call-button {
+  font-size: 1.2em;
+  border-radius: .4em;
+  width: 4.5em;
+  height: 4.5em;
+  padding: 1.2em;
+  background-color: #28a745;
+  color: white;
+  border: 2px solid whitesmoke;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+  margin: 0 auto;
+}
+
+.call-button:hover {
+  background-color: whitesmoke;
+  color: #28a745;
+  transform: scale(1.05);
+  transform: translateY(-10%);
+}
+
+/* Media query para telas mobiles (entre 360px e 520px) */
+
+@media (min-width: 360px) and (max-width: 520px) {
+  footer {
+    display: block;
+    text-align: center;
+  }
+
+  .container {
+    max-width: 40em;
+    padding: 2em;
+  }
+
+  .keyboard {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Centralização e espaçamento geral */
+  .dialpad {
+    margin-left: .2em;
+    margin-right: .2em;
+    background-color: #0a0a0a;
+    border-radius: .6em;
+  }
+  
+  .dial-button {
+    padding-bottom: 2em;
+    width: 3em;
+    height: 2.4em;
+    margin: .2em;
+    font-size: 1.6em;
+    color: #fff;
+    background: linear-gradient(145deg, #3b3b3b, #292929);
+    border: 1px solid rgb(12, 136, 99);
+    cursor: pointer;
+    transition: 0.2s;
+  }
+}
