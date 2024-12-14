@@ -1,0 +1,51 @@
+[
+  {
+    "name": "Julio Caio",
+    "status": "In Call",
+    "endsip": "0703",
+    "image": "../images/contacts/julio.jpg",
+    "number": "99650-0000"
+  },
+  {
+    "username": "Ada Lovelace",
+    "status": "Unavaliable",
+    "userURI": "1815",
+    "image": "../images/contacts/ada.jpg",
+    "number": "11111-1111"
+  },
+  {
+    "username": "Linus Torvalds",
+    "status": "Avaliable",
+    "userURI": "1969",
+    "image": "../images/contacts/linus.jpg",
+    "number": "11111-1111"
+  },
+  {
+    "username": "Alan Turing",
+    "status": "In Call",
+    "userURI": "1912",
+    "image": "../images/contacts/turing.jpg",
+    "number": "11111-1111"
+  },
+  {
+    "username": "Brendan Eich",
+    "status": "Avaliable",
+    "userURI": "",
+    "image": "../images/contacts/bredan.jpg",
+    "number": "11111-1111"
+  },
+  {
+    "username": "Luiz Carlos",
+    "status": "In Call",
+    "userURI": "",
+    "image": "../images/contacts/luiz.jpeg",
+    "number": "11111-1111"
+  },
+  {
+    "username": "Camilly Souza",
+    "status": "Unavaliable",
+    "userURI": "0804",
+    "image": "../images/contacts/camilly.jpeg",
+    "number": "99999-8523"
+  }
+]

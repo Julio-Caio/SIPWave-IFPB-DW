@@ -64,6 +64,7 @@
 .sidebar-darkmode, .sidebar-darkmode a {
   color: black;
   background-color: #ececec;
+  transition: all 0.4s ease;
 }
 
 .sidebar-darkmode a:hover {
