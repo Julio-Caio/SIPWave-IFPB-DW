@@ -22,7 +22,7 @@
 body {
   margin: 0;
   font-family: var(--font-kanit);
-  background: url('../images/bg/bg-wave-home.jpg') center/cover no-repeat;
+  background: url('images/bg/bg-wave-home.jpg') center/cover no-repeat;
   color: white;
   min-height: 100vh;
   position: relative;

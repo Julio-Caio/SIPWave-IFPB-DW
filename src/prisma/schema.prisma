@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  username   String
+  email      String   @unique
+  createdAt  DateTime @default(now())
+  password   String
+  extension  String?
+}
+
+enum DomainStatus {
+  Active
+  Inactive
+}
+
+model Domain {
+  id       Int          @id @default(autoincrement())
+  name     String
+  tag      String
+  sip      String
+  status   DomainStatus
+  extensions Extension[] // 1:N
+}
+
+model Extension {
+  id              Int      @id @default(autoincrement())
+  extId           Int
+  uriRegister     String
+  addressDomain   String
+  proxySipServer  String
+  extPasswd       String
+  domainId        Int      // Foreign key to domain
+  domain          Domain  @relation(fields: [domainId], references: [id]) 
+}
