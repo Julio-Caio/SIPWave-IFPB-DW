@@ -1,4 +1,4 @@
-import prisma from '../config/prismaClient'
+import prisma from '../config/prismaClient.js'
 
 class DomainModel {
     static async createDomain(data) {
@@ -10,4 +10,4 @@ class DomainModel {
     }
   }
   
-export default { DomainModel };
+export default DomainModel;

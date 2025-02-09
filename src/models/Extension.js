@@ -5,9 +5,11 @@ class ExtensionModel {
       return await prisma.extension.create({ data });
     }
   
-    static async getExtensionsByDomain(domainId) {
+    static async getAllExtensions() {
       return await prisma.extension.findMany({
-        where: { domainId },
+        include: { 
+            domain: true,
+         },
       });
     }
   }

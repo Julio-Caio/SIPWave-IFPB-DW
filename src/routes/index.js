@@ -1,5 +1,6 @@
 import express from 'express';
-import UserModel from '../models/User.js'
+import UserModel from '../models/User.js';
+import DomainModel from '../models/Domain.js';
 import ExtensionModel from '../models/Extension.js';
 import AuthService from '../services/authService.js';
 
@@ -32,7 +33,7 @@ route.get('/extensions', async (req, res, next) => {
 
 route.get('/api/extensions', async (req, res, next) => {
     try {
-      const extensions = ExtensionModel.getExtensionsByDomain();
+      const extensions = await ExtensionModel.getAllExtensions();
       return res.status(200).json(extensions);
     } catch (err) {
       next(err);
@@ -68,6 +69,17 @@ route.get('/domains', (req, res) => {
     }
 })
 
+// return domains
+route.get('/api/domains', async (req, res) => {
+    try {
+        const domainsCreated = await DomainModel.getAllDomains();
+        return res.status(200).json(domainsCreated);
+    } catch (err)
+    {
+        throw new HTTPError('Error: Unable to return domains!')
+    }
+})
+
 //contacts
 route.get('/contacts', (req, res) => {
     try {
@@ -95,6 +107,14 @@ route.get('/signup', (req, res)=> {
     }
 })
 
+// Next issue: create authorization logic
+route.get('/admin/dashboard', (req, res) => {
+    try {
+        res.sendFile(process.cwd() + '/public/dashboard.html')
+    } catch(err) {
+        throw new HTTPError('Error: Unable to render page', 500)
+    }
+})
 
 // Create User
 route.post('/api/signup', async (req, res) => {
@@ -129,9 +149,9 @@ route.post('/api/signup', async (req, res) => {
 
 // create extensions
 route.post('/api/extensions', async (req, res, next) => {
-  const { extId, uriRegister, addressDomain, proxySipServer, extPasswd } = req.body;
+  const { extId, uri, proxySipServer, extPasswd } = req.body;
 
-  if (!extId || !uriRegister || !addressDomain || !proxySipServer || !extPasswd) {
+  if (!extId || !uri || !proxySipServer || !extPasswd) {
         throw new HTTPError('Error when passing parameters');
   }
 
@@ -144,11 +164,31 @@ route.post('/api/extensions', async (req, res, next) => {
       throw new HTTPError('Unable to create Extension Line!');
     }
 
-    return res.status(201).json(extension);
+    return res.status(201).json(ext);
 
   } catch (err) {
     next(err); 
   }
+});
+
+// Create domains
+route.post('/api/domains', async (req, res) => {
+    const { address, tag, sipServer, status } = req.body;
+
+    if (!address || !sipServer || !status) {
+        throw new HTTPError("Missing parameters!", 400);
+    }
+
+    try {
+        const domainCreated = await DomainModel.createDomain(req.body);
+        res.status(201).json({
+            message: "Domain created successfully!",
+            domain: domainCreated
+        });
+    } catch (error) {
+        console.error(error);
+        throw new HTTPError("Unable to create domain!");
+    }
 });
 
 route.use((req, res, next) => {

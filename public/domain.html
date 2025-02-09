@@ -110,22 +110,22 @@
             <div class="modal-body">
               <form class="row">
                 <div class="col-6">
-                  <label for="address-domain" class="fw-bold p-2"
+                  <label for="name" class="fw-bold p-2"
                     >Address</label
                   >
                   <input
                     type="text"
                     class="form-control"
-                    id="address-domain"
+                    id="address"
                     placeholder="my-domain.com"
                   />
                 </div>
                 <div class="col-6">
-                  <label for="tag" class="fw-bold p-2">Proxy SIP Server</label>
+                  <label for="sip" class="fw-bold p-2">SIP Server</label>
                   <input
                     type="text"
                     class="form-control"
-                    id="proxysip"
+                    id="sipServer"
                     placeholder="192.168.0.0"
                   />
                 </div>
@@ -139,13 +139,11 @@
                   />
                 </div>
                 <div class="col-6 mt-2">
-                  <label for="tag" class="fw-bold p-2">Status</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="status"
-                    placeholder="Active"
-                  />
+                  <label for="status" class="fw-bold p-2">Status</label>
+                  <select class="form-select form-select-sm" name="status" id="status">
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                  </select>
                 </div>
               </form>
             </div>

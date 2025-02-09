@@ -22,21 +22,22 @@ enum DomainStatus {
 }
 
 model Domain {
-  id       Int          @id @default(autoincrement())
-  name     String
-  tag      String
-  sip      String
-  status   DomainStatus
-  extensions Extension[] // 1:N
+  id          Int         @id @default(autoincrement())
+  address     String
+  tag         String
+  sipServer   String
+  status      DomainStatus
+  extensions  Extension[]  // 1:N
 }
 
 model Extension {
   id              Int      @id @default(autoincrement())
-  extId           Int
-  uriRegister     String
-  addressDomain   String
+  extId           Int      @unique
+  uri             String
   proxySipServer  String
   extPasswd       String
-  domainId        Int      // Foreign key to domain
-  domain          Domain  @relation(fields: [domainId], references: [id]) 
+  domainId        Int
+  domain          Domain   @relation(fields: [domainId], references: [id], onDelete: Cascade)
+  
+  @@index([domainId])  // Índice para a chave estrangeira
 }
