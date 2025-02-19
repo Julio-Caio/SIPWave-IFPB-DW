@@ -3,6 +3,8 @@ import UserModel from '../models/User.js';
 import DomainModel from '../models/Domain.js';
 import ExtensionModel from '../models/Extension.js';
 import AuthService from '../services/authService.js';
+import { verifyClient } from '../services/sip/config/client.js';
+import { makeSIPCall } from '../services/sip/config/client.js';
 
 const route = express.Router();
 
@@ -40,12 +42,30 @@ route.get('/api/extensions', async (req, res, next) => {
     }
 });
 
+route.get('/api/extensions/:extId', async (req, res) => {
+    const { extId } = req.params;
+  
+    try {
+      const extension = await ExtensionModel.getExtensionById(Number(extId));
+  
+      if (!extension) {
+        return res.status(404).json({ message: 'Extensão não encontrada' });
+      }
+  
+      res.json({
+        extId: extension.extId,
+        extPasswd: extension.extPasswd,
+        domain: extension.domain ? extension.domain.address : 'Domínio não encontrado',
+      });
+    } catch (error) {
+      console.error('Erro ao buscar extensão por ID:', error);
+      res.status(500).json({ message: 'Erro ao buscar a extensão' });
+    }
+  });
+  
+
 route.get('/api/extensions/domain/:domainId', async (req, res, next) => {
     const { domainId } = req.params;
-
-    if (typeof domainId !== "number") {
-        return res.status(400).json({ error: 'Domain ID must be a numeric value' });
-    }
 
     try {
         const extensions = await ExtensionModel.getExtensionsByDomain(Number(domainId));
@@ -169,6 +189,57 @@ route.post('/api/extensions', async (req, res, next) => {
   } catch (err) {
     next(err); 
   }
+});
+
+// Novo endpoint para verificar a extensão e configurar o cliente SIP
+route.post('/api/configure-client', async (req, res) => {
+    const { extId, password, domain } = req.body;
+
+    if (!extId || !domain) {
+        return res.status(400).json({ error: 'É necessário fornecer o ID do ramal e o domínio' });
+    }
+
+    try {
+        const clientInfo = await verifyClient(extId, password, domain);
+
+        if (!clientInfo) {
+            return res.status(404).json({ error: 'Ramal não encontrado ou dados inválidos!' });
+        }
+
+        const clientConfig = configClient(clientInfo);
+
+        if (!clientConfig) {
+            return res.status(500).json({ error: 'Erro ao configurar o cliente SIP' });
+        }
+
+        res.status(200).json({ message: 'Cliente SIP configurado com sucesso', clientConfig });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Erro ao configurar cliente SIP' });
+    }
+});
+
+// Novo endpoint para iniciar chamada entre extensões
+route.post('/api/call', async (req, res) => {
+    const { extIdFrom, extIdTo } = req.body;
+
+    if (!extIdFrom || !extIdTo) {
+        return res.status(400).json({ error: 'É necessário fornecer os IDs das extensões' });
+    }
+
+    try {
+        // Lógica para originar a chamada SIP entre as extensões
+        const callResult = await makeSIPCall(extIdFrom, extIdTo);
+
+        if (callResult.success) {
+            return res.status(200).json({ message: 'Chamada iniciada com sucesso' });
+        } else {
+            return res.status(500).json({ error: 'Falha ao iniciar chamada' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Erro ao tentar iniciar chamada' });
+    }
 });
 
 // Create domains

@@ -1,4 +1,4 @@
-@server = http://localhost:3000
+@server = http://localhost:3001
 
 ### GET home ###
 GET {{server}}/ HTTP/1.1
