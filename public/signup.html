@@ -78,7 +78,7 @@
     </header>
 
     <div class="container">
-      <form class="form-signin mt-3">
+      <form id="signupForm" action="/users" method="post">
         <fieldset>
           <img
             class="mb-4"
@@ -95,7 +95,7 @@
             id="username"
             required
             class="form-control mb-3"
-            placeholder="Your Username"
+            placeholder="Username"
           />
           <input
             type="email"
@@ -119,11 +119,32 @@
             name="repeatpassword"
             id="repeatpassword"
             required
-            minlength="4"
             class="form-control mb-3"
             placeholder="Confirm Password"
           />
           <div id="feedback" class="feedback"></div>
+
+          <div
+              class="toast align-items-center text-bg-danger border-0"
+              id="errorToast"
+              role="alert"
+              aria-live="assertive"
+              aria-atomic="true"
+              data-bs-autohide="false"
+              style="position: absolute; bottom: 20px; right: 20px; z-index: 9999;"
+            >
+              <div class="d-flex">
+                <div class="toast-body">
+                  <strong class="me-auto" id="toastMessage">Erro: Algo deu errado!</strong>
+                </div>
+                <button
+                  type="button"
+                  class="btn-close btn-close-white me-2 m-auto"
+                  data-bs-dismiss="toast"
+                  aria-label="Close"
+                ></button>
+              </div>
+          </div>
 
           <button type="submit" class="btn btn-signup mt-2">Signup</button>
         </fieldset>

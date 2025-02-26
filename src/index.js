@@ -28,7 +28,8 @@ server.use(
   })
 );
 
-server.use(express.json());
+server.use(express.urlencoded({extended: false}))
+server.use(express.json())
 
 // Static files
 server.use('/', express.static(path.join(__dirname, '../public')));
@@ -36,6 +37,8 @@ server.use('/public/js', express.static(path.join(__dirname, '../public/js')));
 server.use('/public/css', express.static(path.join(__dirname, '../public/css')));
 server.use('/public/global_styles', express.static(path.join(__dirname, '../public/global_styles')));
 server.use('/public/images', express.static(path.join(__dirname, '../public/images')));
+
+// Testar conexão com banco
 
 // Main routes
 server.use(router);

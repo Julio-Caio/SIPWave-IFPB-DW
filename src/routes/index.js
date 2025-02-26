@@ -136,20 +136,18 @@ route.get('/admin/dashboard', (req, res) => {
     }
 })
 
-// Create User
-route.post('/api/signup', async (req, res) => {
+route.post('/users', async (req, res) => {
     const { username, email, password, repeatpassword } = req.body;
-
-    // Validate parameters
-    if (!username || !email || !password || !repeatpassword) {
-        throw new HTTPError('Error when passing parameters');
-    }
-
-    if (password !== repeatpassword) {
-        throw new HTTPError("Passwords don't match");
-    }
-
+    // Validar parâmetros
     try {
+        if (!username || !email || !password || !repeatpassword) {
+            throw new HTTPError('Error when passing parameters');
+        }
+    
+        if (password !== repeatpassword) {
+            throw new HTTPError("Passwords don't match", 400);
+        }
+
         let checkEmail = await UserModel.emailExists(email);
         if (checkEmail) throw new HTTPError("The email is already registered!");
 
@@ -161,34 +159,10 @@ route.post('/api/signup', async (req, res) => {
             password: hashedPassword,
         });
 
-        res.status(201).json(newUser);
-    } catch (err) {
-        res.status(500).json({ error: 'Error to register user' });
+        res.status(201).redirect("/login")
+    } catch (HTTPError) {
+        console.log("Error during user creation:", HTTPError);
     }
-});
-
-// create extensions
-route.post('/api/extensions', async (req, res, next) => {
-  const { extId, uri, proxySipServer, extPasswd } = req.body;
-
-  if (!extId || !uri || !proxySipServer || !extPasswd) {
-        throw new HTTPError('Error when passing parameters');
-  }
-
-  if (typeof extId !== 'number') throw new HTTPError('Extension Id must be numeric value!', 400)
-
-  try {
-    const ext = await ExtensionModel.createExtension(req.body);
-
-    if (!ext) {
-      throw new HTTPError('Unable to create Extension Line!');
-    }
-
-    return res.status(201).json(ext);
-
-  } catch (err) {
-    next(err); 
-  }
 });
 
 // Novo endpoint para verificar a extensão e configurar o cliente SIP
@@ -246,19 +220,20 @@ route.post('/api/call', async (req, res) => {
 route.post('/api/domains', async (req, res) => {
     const { address, tag, sipServer, status } = req.body;
 
-    if (!address || !sipServer || !status) {
-        throw new HTTPError("Missing parameters!", 400);
-    }
-
     try {
+        if (!address || !sipServer || !status) {
+            throw new HTTPError("Missing parameters!", 400);
+        }
+
         const domainCreated = await DomainModel.createDomain(req.body);
+
         res.status(201).json({
-            message: "Domain created successfully!",
-            domain: domainCreated
+                message: "Domain created successfully!",
+                domain: domainCreated
         });
-    } catch (error) {
-        console.error(error);
-        throw new HTTPError("Unable to create domain!");
+    } catch(HTTPError) {
+        res.send("Domain not created try again later")
+        console.log(`!Erro: ${HTTPError}`)
     }
 });
 
