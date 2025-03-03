@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum DomainStatus {
+  Active
+  Inactive
+}
+
+model Domain {
+  id         Int          @id @default(autoincrement())
+  address    String
+  tag        String
+  sipServer  String
+  status     DomainStatus
+  extensions Extension[] // 1:N
+}
+
+model Extension {
+  id             Int    @id @default(autoincrement())
+  extId          Int    @unique
+  uri            String
+  proxySipServer String
+  extPasswd      String
+  domainId       Int
+  domain         Domain @relation(fields: [domainId], references: [id], onDelete: Cascade)
+  User           User[]
+
+  @@index([domainId])
+}
+
+model User {
+  id          Int        @id @default(autoincrement())
+  username    String
+  email       String     @unique
+  createdAt   DateTime   @default(now())
+  password    String
+  extensionId Int?
+  extension   Extension? @relation(fields: [extensionId], references: [id])
+}

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIPWave - SIP Domain</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/public/global_styles/footer/style.css" />
+    <link rel="stylesheet" href="/public/global_styles/navbar/style.css" />
+    <link rel="stylesheet" href="/public/global_styles/sidebar/style.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/domain.css" />
+  </head>
+
+  <body>
+    <header class="border-bottom py-3 px-4 d-flex align-items-center bg-dark">
+      <a class="nav-brand" href="/">
+        <img
+          src="/public/images/logo/logo_sipwave.png"
+          alt="logo SIPWave"
+          class="nav_brand"
+        />
+      </a>
+      <div class="flex-grow-1 position-relative">
+        <input
+          type="search"
+          class="form-control ps-5 p-2"
+          placeholder="Search registered devices..."
+        />
+        <i
+          class="fa-solid fa-magnifying-glass position-absolute top-50 start-3 translate-middle-y mx-3 text-light"
+        ></i>
+      </div>
+      <button
+        class="btn btn-dark ms-3"
+        id="toggleSidebarButton"
+        onclick="toggleSidebar()"
+      >
+        <i class="bi bi-list"></i>
+      </button>
+    </header>
+
+    <div id="collapseSidebar" class="sidebar">
+      <span class="closebtn text-light" onclick="toggleSidebar()">×</span>
+      <a href="/"> <i class="bi bi-house-door me-2"></i> Home </a>
+      <a href="/dashboard">
+        <i class="bi bi-grid-3x3-gap me-2"></i> Dashboard
+      </a>
+      <a href="#"> <i class="bi bi-file-earmark-text me-2"></i> Domains </a>
+      <a href="/contacts"
+        ><i class="bi bi-person-lines-fill me-2"></i> Contacts</a
+      >
+      <a href="/extensions"><i class="bi bi-telephone me-2"></i> Extensions</a>
+
+      <a href="/call"
+        ><i class="bi bi-telephone-outbound-fill me-2"></i> Call</a
+      >
+
+      <a href="/logout">
+        <i class="bi bi-box-arrow-in-right me-2"></i> Logout
+      </a>
+    </div>
+    <!-- Main Content -->
+    <div class="container table-responsive p-3" id="container">
+      <!-- Button add new domain -->
+      <h1 class="mt-5 text-center fs-2 fw-bold text-dark">Domains</h1>
+      <div class="d-flex justify-content-md-end mb-3">
+        <button
+          type="button"
+          class="btn btn-success fw-bold"
+          data-bs-toggle="modal"
+          data-bs-target="#Modal"
+        >
+          <i class="bi bi-plus"></i> New
+        </button>
+      </div>
+
+      <!-- Modal -->
+      <div
+        class="modal fade text-dark"
+        id="Modal"
+        tabindex="-1"
+        aria-labelledby="ModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 fw-bold" id="ModalLabel">
+                Add new domain
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form class="row">
+                <div class="col-6">
+                  <label for="name" class="fw-bold p-2">Address</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="address"
+                    placeholder="my-domain.com"
+                  />
+                </div>
+                <div class="col-6">
+                  <label for="sip" class="fw-bold p-2">SIP Server</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="sipServer"
+                    placeholder="192.168.0.0"
+                  />
+                </div>
+                <div class="col-6 mt-2">
+                  <label for="tag" class="fw-bold p-2">Tag</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="tag"
+                    placeholder="Some description"
+                  />
+                </div>
+                <div class="col-6 mt-2">
+                  <label for="status" class="fw-bold p-2">Status</label>
+                  <select
+                    class="form-select form-select-sm"
+                    name="status"
+                    id="status"
+                  >
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                  </select>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary" id="addButton">
+                Save changes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Edit Modal -->
+      <div
+        class="modal fade text-dark"
+        id="editModal"
+        tabindex="-1"
+        aria-labelledby="editModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 fw-bold" id="editModalLabel">
+                Edit SIP Domain
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form class="row">
+                <div class="col-6">
+                  <label for="editDomain" class="fw-bold p-2">SIP Domain</label>
+                  <input type="text" class="form-control" id="editDomain" />
+                </div>
+                <div class="col-6">
+                  <label for="editURI" class="fw-bold p-2">Tag</label>
+                  <input type="text" class="form-control" id="editTag" />
+                </div>
+                <div class="col-6">
+                  <label for="editProxy" class="fw-bold p-2"
+                    >Proxy SIP Server</label
+                  >
+                  <input type="text" class="form-control" id="editProxy" />
+                </div>
+                <div class="col-6 mt-2">
+                  <label for="editPasswd" class="fw-bold p-2">Status</label>
+                  <select
+                    class="form-select form-select-sm"
+                    name="status"
+                    id="editStatus"
+                  >
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                  </select>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button type="button" class="btn btn-primary" id="saveEdit">
+                Save changes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Delete -->
+      <div
+        class="modal fade text-dark"
+        id="deleteModal"
+        tabindex="-1"
+        aria-labelledby="deleteModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 fw-bold" id="deleteModalLabel">
+                Confirm Delete
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              Are you sure you want to delete this entry?
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button type="button" class="btn btn-danger" id="confirmDelete">
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Table -->
+      <table class="table table-dark table-striped" style="width: 100%">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col" class="text-center" style="width: 15%">#</th>
+            <th scope="col" class="text-center" style="width: 15%">Domain</th>
+            <th scope="col" class="text-center" style="width: 15%">Tag</th>
+            <th scope="col" class="text-center" style="width: 15%">ProxySIP</th>
+            <th scope="col" class="text-center" style="width: 15%">Register</th>
+            <th scope="col" class="text-center" style="width: 15%"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row" class="text-center">1</th>
+            <td class="text-center">ifpb.edu.br</td>
+            <td class="text-center">First Domain</td>
+            <td class="text-center">192.168.1.1</td>
+            <td class="text-center">Active</td>
+            <td class="text-center">
+              <i
+                class="rounded-1 bi bi-pencil-square mx-3 bg-primary text-light p-1"
+              ></i>
+              <i
+                class="rounded-1 bi bi-trash3-fill bg-danger text-light p-1"
+              ></i>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-center">2</th>
+            <td class="text-center">example.org</td>
+            <td class="text-center">Backup</td>
+            <td class="text-center">192.168.1.2</td>
+            <td class="text-center">Inactive</td>
+            <td class="text-center">
+              <i
+                class="rounded-1 bi bi-pencil-square mx-3 bg-primary text-light p-1"
+              ></i>
+              <i
+                class="rounded-1 bi bi-trash3-fill bg-danger text-light p-1"
+              ></i>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-center">3</th>
+            <td class="text-center">ftp.debian.org</td>
+            <td class="text-center">Testing</td>
+            <td class="text-center">192.168.1.3</td>
+            <td class="text-center">Active</td>
+            <td class="text-center">
+              <i
+                class="rounded-1 bi bi-pencil-square mx-3 bg-primary text-light p-1"
+              ></i>
+              <i
+                class="rounded-1 bi bi-trash3-fill bg-danger text-light p-1"
+              ></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <footer class="bg-dark justify-content-center">
+      <p class="fw-bold">&copy; SIPWave Project</p>
+    </footer>
+
+    <script src="/public/global_styles/sidebar/script.js"></script>
+    <script src="js/domain.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

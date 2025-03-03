@@ -1,0 +1,13 @@
+@server = http://localhost:3001
+
+### GET home ###
+GET {{server}}/ HTTP/1.1
+
+### GET login ###
+GET {{server}}/login
+
+### GET extensions ###
+GET {{server}}/api/extensions HTTP/1.1
+
+### GET Domains ###
+GET {{server}}/api/domains

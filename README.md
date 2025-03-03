@@ -6,15 +6,15 @@ Hello, Dev! How are things going? Have you had your little coffee today?
 
 ## Pages:
 
-- [Home](https://camillypsouza.github.io/SIPWave-IFPB-DW/public/pages/homepage/)
-- [Register](https://camillypsouza.github.io/SIPWave-IFPB-DW/public/pages/register/)
-- [Login](https://camillypsouza.github.io/SIPWave-IFPB-DW/public/pages/login/)
-- [Domains](https://camillypsouza.github.io/SIPWave-IFPB-DW/public/pages/domain_sip/)
+- [Home](https://Julio-Caio.github.io/SIPWave-IFPB-DW/public/index.html)
+- [Register](https://Julio-Caio.github.io/SIPWave-IFPB-DW/public/signup.html)
+- [Login](https://Julio-Caio.github.io/SIPWave-IFPB-DW/public/login.html)
+- [Domains](https://Julio-Caio.github.io/SIPWave-IFPB-DW/public/domain.html)
 
 <br>
-<center><img src="./public/preview/image-project.png" width="80%" height="70%" style="margin-top:0.8em" /></center>
+<center><img src="preview/image-project.png" width="80%" height="70%" style="margin-top:0.8em" /></center>
 <br>
-<center><img src="./public/preview/preview-login.png" width="80%" height="70%" style="margin-top:0.8em" /></center>
+<center><img src="preview/preview-login.png" width="80%" height="70%" style="margin-top:0.8em" /></center>
 
 ## Features:
 

@@ -1,0 +1,346 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Sankofa+Display&display=swap');
+
+:root {
+  --color-light-grey: #3a3a3a73;
+  --color-dark-grey: #1a1a1a;
+  --color-light-cian: #08b1a0;
+  --color-dark-cian: #164e48;
+  --font-kanit: 'Kanit', serif;
+  --white-smoke: whitesmoke;
+  --gradient-cian: linear-gradient(to right, #35978d, #1e5650);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    background: url('../images/bg/bg-login.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.container {
+    flex: 1;
+}
+
+body::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(161, 161, 161, 0.302);
+  z-index: -1;
+}
+
+h1 {
+  font-weight: 800;
+  background: var(--gradient-cian);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h2 {
+  color: var(--color-light-cian);
+}
+
+.link-custom {
+    margin-left: 6em;
+    font-weight: bolder;
+    color: var(--color-dark-cian);
+}
+
+form {
+  display: flex;
+  justify-content: center;
+}
+
+form fieldset {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.281),
+    0 4px 6px rgba(134, 134, 134, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.8em;
+  max-width: 32em;
+  padding: 4em;
+  backdrop-filter: blur(1em);
+}
+
+.btn-submit {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+@keyframes glowing {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.form-signin button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  outline: none;
+  color: #fff;
+  background: #111;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  position: relative;
+}
+
+.form-signin button:before {
+  content: '';
+  background: linear-gradient(
+    45deg,
+    #08b1a0,
+    #1e5650,
+    #35978d
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing 20s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+.form-signin button:hover:before {
+  opacity: 1;
+}
+
+.form-signin button:active {
+  color: #000;
+}
+
+.form-signup input,
+.form-signin input {
+  position: relative;
+  padding: 0.6em;
+  width: 26em;
+  height: 3em;
+  border: none;
+  margin: .12em;
+  border-radius: 0.8em;
+  color: whitesmoke;
+  background: var(--color-light-grey);
+  transition: box-shadow 0.3s ease, border 0.3s ease;
+}
+
+.form-signup input::placeholder,
+.form-signin input::placeholder {
+  color: var(--color-dark-cian);
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.form-signup input:focus,
+.form-signin input:focus {
+  outline: none;
+  border-color: var(--color-light-cian);
+  box-shadow: 0 0 8px rgba(8, 177, 160, 0.8);
+}
+
+/* Estilo da logo */
+.image-logo-ifpb {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 20px;
+  margin-right: 20px;
+}
+
+.image-logo-ifpb img {
+  width: auto;
+  height: 3.5em;
+  padding-right: 2em;
+}
+
+/* Responsividade */
+@media (min-width: 768px) {
+  .form-signup input {
+    width: auto;
+    height: 3em;
+    color: var(--color-light-cian);
+    padding: 1em;
+    background-color: var(--color-light-grey);
+    font-weight: 600;
+    border-radius: 0.4em;
+    margin: 0.8em 0.8em 0.8em;
+  }
+
+  .link-custom {
+    margin-bottom: 2em;
+    transform: translateX(-75%);
+    font-weight: bolder;
+    color: var(--color-dark-cian);
+  }
+}
+
+@media (min-width: 1920px) {
+
+  .nav-link {
+    font-size: 1.4em;
+    margin-left: -2%;
+  }
+}
+
+.form-signin {
+  width: 100%;
+  padding: 2em 0.6em 2em;
+  margin: 0 auto;
+}
+
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+
+.btn {
+  background-color: var(--color-light-cian);
+  border: 0.8px solid var(--white-smoke);
+  min-width: 9em;
+  padding: 0.2em;
+}
+
+.btn-signup {
+  width: 18em;
+  height: 3.2em;
+  border: none;
+  border-radius: 8px;
+  background: var(--gradient-cian);
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+}
+
+.btn-signup:hover {
+  transform: scale(1.05);
+  background: whitesmoke;
+  color: #1f857a;
+}
+
+a {
+    color: var(--color-light-cian, #17a2b8);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+
+  fieldset {
+    padding: 0 1.2em 1.2em 0;
+  }
+
+  .form-signup input,
+  .form-signin input {
+    position: relative;
+    padding: 0.4em;
+    width: 16em;
+    height: 3em;
+    border: none;
+    border-radius: 0.3em;
+    color: whitesmoke;
+    transition: box-shadow 0.3s ease, border 0.3s ease;
+  }
+}
+
+footer {
+    margin-top: 3.2em;
+    min-height: 10%;
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.4em;
+    background: var(--color-dark-grey);
+    color: #f5f5f5;
+    text-align: center;
+    font-size: 1.075em;
+  }
+  
+  .footer_markdown p {
+    color: rgb(245, 245, 245);
+  }
+  
+  .footer_markdown span {
+    text-decoration: underline;
+    color: var(--color-light-cian);
+  }
+  
+  .footer_copyright p {
+    color: var(--color-light-cian);
+  }
+  
+  .footer_ifpb img {
+    transform: scale(.7);
+  }
+  
+  .footer_ifpb p {
+    color: var(--color-light-cian);
+  }
+  
+  i {
+    cursor: pointer;
+  }
+  
+  /* Media query para telas grandes */
+  @media (min-width: 1920px) {
+      .navbar-brand {
+          font-size: 1.8em;
+      }
+  
+      .container .table {
+          width: 44em;
+          min-height: 16em;
+          font-size: 1.2em;
+      }
+  
+      td, tr {
+          padding-top: 2em;
+      }
+  }
+  
+  /* Media query para telas pequenas (até 480px) */
+  @media (max-width: 480px) {
+      footer {
+        display: block;
+      }
+  }
+  
+  /* Media query para telas médias (entre 481px e 768px) */
+  @media (min-width: 481px) and (max-width: 768px) {
+    footer {
+      display: block;
+      text-align: center;
+    }
+  }
