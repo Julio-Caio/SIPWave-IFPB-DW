@@ -20,6 +20,13 @@
   </head>
 
   <body>
+    <style>
+      .text-bg-success-emphasis {
+        background-color: #bcd6ca;
+        color: #0f5132;
+      }
+    </style>
+
     <header class="border-bottom py-3 px-4 d-flex align-items-center bg-dark">
       <a class="nav-brand" href="/">
         <img
@@ -80,6 +87,26 @@
         >
           <i class="bi bi-plus"></i> New
         </button>
+      </div>
+
+      <div
+        class="toast align-items-center border-0"
+        id="toast"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+        data-bs-autohide="false"
+        style="position: fixed; bottom: 20px; right: 20px; z-index: 9999"
+      >
+        <div class="d-flex">
+          <div class="toast-body" id="toastMessage"></div>
+          <button
+            type="button"
+            class="btn-close me-2 m-auto"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
       </div>
 
       <!-- Modal -->
@@ -171,9 +198,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5 fw-bold" id="editModalLabel">
-                Edit SIP Domain
-              </h1>
+              <h5 class="modal-title" id="editModalLabel">Editar Domínio</h5>
               <button
                 type="button"
                 class="btn-close"
@@ -182,44 +207,36 @@
               ></button>
             </div>
             <div class="modal-body">
-              <form class="row">
-                <div class="col-6">
-                  <label for="editDomain" class="fw-bold p-2">SIP Domain</label>
-                  <input type="text" class="form-control" id="editDomain" />
-                </div>
-                <div class="col-6">
-                  <label for="editURI" class="fw-bold p-2">Tag</label>
-                  <input type="text" class="form-control" id="editTag" />
-                </div>
-                <div class="col-6">
-                  <label for="editProxy" class="fw-bold p-2"
-                    >Proxy SIP Server</label
-                  >
-                  <input type="text" class="form-control" id="editProxy" />
-                </div>
-                <div class="col-6 mt-2">
-                  <label for="editPasswd" class="fw-bold p-2">Status</label>
-                  <select
-                    class="form-select form-select-sm"
-                    name="status"
-                    id="editStatus"
-                  >
-                    <option value="Active">Active</option>
-                    <option value="Inactive">Inactive</option>
-                  </select>
-                </div>
-              </form>
+              <label for="editAddress">Endereço</label>
+              <input type="text" id="editAddress" class="form-control" />
+
+              <label for="editTag">Tag</label>
+              <input type="text" id="editTag" class="form-control" />
+
+              <label for="editSipServer">Servidor SIP</label>
+              <input type="text" id="editSipServer" class="form-control" />
+
+              <label for="editStatus" class="fw-bold p-2">Status</label>
+              <select
+                class="form-select form-select-sm"
+                name="status"
+                id="editStatus"
+              >
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
             </div>
+
             <div class="modal-footer">
               <button
                 type="button"
                 class="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
-                Cancel
+                Cancelar
               </button>
-              <button type="button" class="btn btn-primary" id="saveEdit">
-                Save changes
+              <button type="button" class="btn btn-primary" id="saveEditButton">
+                Salvar alterações
               </button>
             </div>
           </div>
@@ -278,61 +295,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row" class="text-center">1</th>
-            <td class="text-center">ifpb.edu.br</td>
-            <td class="text-center">First Domain</td>
-            <td class="text-center">192.168.1.1</td>
-            <td class="text-center">Active</td>
-            <td class="text-center">
-              <i
-                class="rounded-1 bi bi-pencil-square mx-3 bg-primary text-light p-1"
-              ></i>
-              <i
-                class="rounded-1 bi bi-trash3-fill bg-danger text-light p-1"
-              ></i>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row" class="text-center">2</th>
-            <td class="text-center">example.org</td>
-            <td class="text-center">Backup</td>
-            <td class="text-center">192.168.1.2</td>
-            <td class="text-center">Inactive</td>
-            <td class="text-center">
-              <i
-                class="rounded-1 bi bi-pencil-square mx-3 bg-primary text-light p-1"
-              ></i>
-              <i
-                class="rounded-1 bi bi-trash3-fill bg-danger text-light p-1"
-              ></i>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row" class="text-center">3</th>
-            <td class="text-center">ftp.debian.org</td>
-            <td class="text-center">Testing</td>
-            <td class="text-center">192.168.1.3</td>
-            <td class="text-center">Active</td>
-            <td class="text-center">
-              <i
-                class="rounded-1 bi bi-pencil-square mx-3 bg-primary text-light p-1"
-              ></i>
-              <i
-                class="rounded-1 bi bi-trash3-fill bg-danger text-light p-1"
-              ></i>
-            </td>
-          </tr>
+          <!-- data table-->
         </tbody>
       </table>
     </div>
 
-    <footer class="bg-dark justify-content-center">
-      <p class="fw-bold">&copy; SIPWave Project</p>
+    <footer class="bg-dark justify-content-center mt-4 py-3">
+      <p class="fs-5">&copy; 2024 <span class="text-success fw-bold mx-3">SIPWave Project</span> All rights reserved.</p>
     </footer>
 
     <script src="/public/global_styles/sidebar/script.js"></script>
-    <script src="js/domain.js"></script>
+    <script type="module" src="js/domain.js" defer></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
       integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"

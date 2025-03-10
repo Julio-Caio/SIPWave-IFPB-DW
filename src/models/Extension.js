@@ -1,102 +1,105 @@
-import prisma from '../config/prismaClient.js'
+import prisma from "../config/prismaClient.js";
 
 class ExtensionModel {
-    // Verifica se uma extensão já existe dentro de um domínio específico
-    static async extensionExists(extId, domainId) {
-        try {
-            const extension = await prisma.extension.findFirst({
-                where: {
-                    extId,
-                    domainId
-                }
-            });
-            return !!extension; // Retorna true se existir, false se não
-        } catch (error) {
-            console.error("Erro ao verificar se a extensão já existe:", error);
-            throw new Error("Erro ao buscar extensão no banco de dados");
-        }
+  // Function to check if an extension exists by its ID and domain ID
+  static async extensionExists(extId, domainId) {
+    try {
+      const extension = await prisma.extension.findFirst({
+        where: {
+          extId,
+          domainId,
+        },
+      });
+      return !!extension;
+    } catch (error) {
+      console.error("Error checking if the extension exists:", error);
+      throw new Error("Error searching for extension in the database");
     }
-  
-  static async createExtension(data) {
+  }
+
+  // Function to create a new extension
+  static async create(data) {
     try {
       return await prisma.extension.create({ data });
     } catch (error) {
-      console.error('Erro ao criar extensão:', error);
-      throw new Error('Não foi possível criar a extensão');
+      console.error("Error creating extension:", error);
+      throw new Error("Unable to create the extension");
     }
   }
 
-  // Obter todas as extensões com os dados do domínio associado
+  // Function to get an extension by its ID
+  static async getExtensionById(id) {
+    try {
+      const ext = await prisma.extension.findUnique({
+        where: { id: Number(id) },
+      });
+      return ext;
+    } catch (error) {
+      console.error("Error retrieving extension:", error);
+      throw new Error("Error retrieving extension.");
+    }
+  }
+
+  // Function to get all extensions
   static async getAll() {
     try {
       return await prisma.extension.findMany({
-        include: { 
-          domain: true,  // Inclui os dados do domínio relacionado
+        include: {
+          domain: true,
         },
       });
     } catch (error) {
-      console.error('Erro ao buscar extensões:', error);
-      throw new Error('Não foi possível recuperar as extensões');
+      console.error("Error retrieving extensions:", error);
+      throw new Error("Unable to retrieve extensions");
     }
   }
 
-  // Buscar uma extensão por ID
-  static async getExtensionById(extId) {
+  // Function to update an extension by ID
+  static async update(id, data) {
     try {
-      return await prisma.extension.findUnique({
-        where: { extId: extId },
-        include: { domain: true },
+      return await prisma.extension.update({
+        where: { id: parseInt(id, 10) },
+        data: data,
       });
     } catch (error) {
-      console.error('Erro ao buscar extensão por ID:', error);
-      throw new Error('Não foi possível encontrar a extensão');
+      console.error("Error updating extension:", error);
+      throw new Error("Unable to update the extension");
     }
   }
 
-  // Buscar extensões por domínio
+  // Function to get extensions by domain ID
   static async getExtensionsByDomain(domainId) {
     try {
       return await prisma.extension.findMany({
         where: { domainId: domainId },
-        include: { domain: true },  // Inclui os dados do domínio relacionado
+        include: { domain: true },
       });
     } catch (error) {
-      console.error('Erro ao buscar extensões para o domínio:', error);
-      throw new Error('Não foi possível encontrar as extensões para este domínio');
+      console.error("Error retrieving extensions for the domain:", error);
+      throw new Error("Unable to find extensions for this domain");
     }
   }
 
-  // Atualizar uma extensão
-  static async updateExtension(extId, data) {
-    try {
-      return await prisma.extension.update({
-        where: { id: extId },
-        data,
-      });
-    } catch (error) {
-      console.error('Erro ao atualizar extensão:', error);
-      throw new Error('Não foi possível atualizar a extensão');
-    }
-  }
-
-  // Deletar uma extensão
-  static async deleteExtension(extId) {
+  // Function to delete an extension by ID
+  static async delete(id) {
     try {
       return await prisma.extension.delete({
-        where: { id: extId },
+        where: {
+          id: parseInt(id, 10),
+        },
       });
     } catch (error) {
-      console.error('Erro ao deletar extensão:', error);
-      throw new Error('Não foi possível deletar a extensão');
+      console.error("Error deleting extension:", error);
+      throw new Error("Unable to delete the extension");
     }
   }
 
-  static async deleteAll()
-  {
+  // Function to delete all extensions
+  static async deleteAll() {
     try {
-        return await prisma.extension.deleteMany()
-    } catch (err) {
-      console.log("Erro: Excluir todos os ramais!")
+      return await prisma.extension.deleteMany();
+    } catch (error) {
+      console.log("Error: Unable to delete all extensions!");
     }
   }
 }

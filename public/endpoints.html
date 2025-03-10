@@ -19,8 +19,15 @@
   </head>
 
   <body>
+    <style>
+      .text-bg-success-emphasis {
+        background-color: #bcd6ca;
+        color: #0f5132;
+      }
+    </style>
+
     <header class="border-bottom py-3 px-4 d-flex align-items-center bg-dark">
-      <a class="nav-brand" href="/public/index.html">
+      <a class="nav-brand" href="/">
         <img
           src="../images/logo/logo_sipwave.png"
           alt="logo SIPWave"
@@ -47,31 +54,47 @@
     </header>
     <div id="collapseSidebar" class="sidebar">
       <span class="closebtn text-light" onclick="toggleSidebar()">×</span>
-      <a href="../index.html">
-        <i class="bi bi-house-door me-2"></i> Home
+      <a href="/"> <i class="bi bi-house-door me-2"></i> Home </a>
+      <a href="/dashboard">
+        <i class="bi bi-grid-3x3-gap me-2"></i> Dashboard
       </a>
-      <a href="../dashboard/index.html"> <i class="bi bi-grid-3x3-gap me-2"></i> Dashboard </a>
-      <a href="../domain_sip/index.html">
-        <i class="bi bi-file-earmark-text me-2"></i> Domains
-      </a>
-      <a href="../contacts/index.html"
+      <a href="/domains"> <i class="bi bi-file-earmark-text me-2"></i> Domains </a>
+      <a href="/contacts"
         ><i class="bi bi-person-lines-fill me-2"></i> Contacts</a
       >
-      <a href="#"
-        ><i class="bi bi-telephone me-2"></i> Extensions</a
-      >
+      <a href="#"><i class="bi bi-telephone me-2"></i> Extensions</a>
 
-      <a href="../phone/index.html"
+      <a href="/call"
         ><i class="bi bi-telephone-outbound-fill me-2"></i> Call</a
       >
 
-      <a href="../login/index.html">
+      <a href="/logout">
         <i class="bi bi-box-arrow-in-right me-2"></i> Logout
       </a>
     </div>
 
     <!-- Main Content -->
     <div class="container table-responsive p-3" id="container">
+      <div
+        class="toast align-items-center border-0"
+        id="toast"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+        data-bs-autohide="false"
+        style="position: fixed; bottom: 20px; right: 20px; z-index: 9999"
+      >
+        <div class="d-flex">
+          <div class="toast-body" id="toastMessage"></div>
+          <button
+            type="button"
+            class="btn-close me-2 m-auto"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+      </div>
+
       <!-- Button add new domain -->
       <h1 class="mt-5 text-center fs-2 fw-bold text-dark">Extension Line</h1>
       <div class="d-flex justify-content-md-end mb-3">
@@ -109,11 +132,11 @@
             <div class="modal-body">
               <form class="row">
                 <div class="col-6">
-                  <label for="extId" class="fw-bold p-2">Extension: </label>
+                  <label for="extension" class="fw-bold p-2">Extension: </label>
                   <input
                     type="number"
                     class="form-control"
-                    id="extId"
+                    id="extension"
                     placeholder="Ex.: 0011"
                   />
                 </div>
@@ -127,33 +150,28 @@
                   />
                 </div>
                 <div class="col-6">
-                  <label for="addressDomain" class="fw-bold p-2"
-                    >SIP Domain</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="addressDomain"
-                    placeholder="domain.com"
-                  />
+                  <label for="domain" class="fw-bold p-2">SIP Domain</label>
+                  <select class="form-control" id="domain">
+                      <option value="">Selecione um domínio</option>
+                  </select>
                 </div>
                 <div class="col-6">
-                  <label for="extProxyServer" class="fw-bold p-2"
+                  <label for="proxySIP" class="fw-bold p-2"
                     >Proxy SIP Server</label
                   >
                   <input
                     type="text"
                     class="form-control"
-                    id="extProxyServer"
+                    id="proxySIP"
                     placeholder="192.168.0.0"
                   />
                 </div>
                 <div class="col-6 mt-2">
-                  <label for="extPasswd" class="fw-bold p-2">Password</label>
+                  <label for="passwd" class="fw-bold p-2">Password</label>
                   <input
                     type="password"
                     class="form-control"
-                    id="extPasswd"
+                    id="passwd"
                     placeholder="Password"
                   />
                 </div>
@@ -209,18 +227,20 @@
                   />
                 </div>
                 <div class="col-6">
-                  <label for="editDomain" class="fw-bold p-2">SIP Domain</label>
-                  <input type="text" class="form-control" id="editDomain" />
+                  <label for="ediDomain" class="fw-bold p-2">SIP Domain</label>
+                  <select class="form-control" id="editDomain">
+                      <option value="">Selecione um domínio</option>
+                  </select>
                 </div>
                 <div class="col-6">
-                  <label for="editURI" class="fw-bold p-2">URI</label>
-                  <input type="text" class="form-control" id="editURI" />
+                  <label for="editUri" class="fw-bold p-2">URI</label>
+                  <input type="text" class="form-control" id="editUri" />
                 </div>
                 <div class="col-6">
-                  <label for="editProxy" class="fw-bold p-2"
+                  <label for="editProxySIP" class="fw-bold p-2"
                     >Proxy SIP Server</label
                   >
-                  <input type="text" class="form-control" id="editProxy" />
+                  <input type="text" class="form-control" id="editProxySIP" />
                 </div>
                 <div class="col-6 mt-2">
                   <label for="editPasswd" class="fw-bold p-2">Password</label>
@@ -305,8 +325,8 @@
       </table>
     </div>
 
-    <footer class="bg-dark justify-content-center">
-      <p class="fw-bold">&copy; SIPWave Project</p>
+    <footer class="bg-dark justify-content-center mt-4 py-3">
+      <p class="fs-5">&copy; 2024 <span class="text-success fw-bold mx-3">SIPWave Project</span> All rights reserved.</p>
     </footer>
 
     <script src="/public/global_styles/sidebar/script.js"></script>
@@ -322,6 +342,6 @@
     ></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="js/endpoint.js"></script>
+    <script type="module" src="js/endpoint.js"></script>
   </body>
 </html>

@@ -1,129 +1,251 @@
+import { showToast } from "./toastMessage.js";
+
 let data = [];
 
-// Fetch para buscar os dados no arquivo json
-async function fetchData() {
-  try {
-    const res = await fetch("./seeders.json");
-    data = await res.json();
-    return data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    data = [];
-    return [];
-  }
+// Popula o select de domínios
+function populateDomainSelect(domains) {
+    const domainSelect = document.getElementById("domain");
+    domainSelect.innerHTML = '<option value="">Selecione um domínio</option>';
+
+    const editDomains = document.getElementById("editDomain");
+    editDomains.innerHTML = '<option value="">Selecione um domínio</option>';
+
+    domains.forEach(domain => {
+        const domainOption = document.createElement("option");
+        domainOption.value = domain.id; 
+        domainOption.textContent = domain.address;
+
+        domainSelect.appendChild(domainOption);
+
+        const editDomainOption = document.createElement("option");
+        editDomainOption.value = domain.id; 
+        editDomainOption.textContent = domain.address; 
+
+        editDomains.appendChild(editDomainOption);
+    });
 }
 
-// Função para popular a tabela
-async function populateTable() {
-  if (!data.length) {
-    await fetchData();
-  }
-  const tableBody = document.querySelector("tbody");
-  tableBody.innerHTML = "";
+// Buscar dominios para selecionar
+async function fetchDomains() {
+    try {
+        const res = await fetch("/api/domains", {
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
 
-  data.forEach((item, index) => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <th scope="row" class="text-center">${index + 1}</th>
-      <td class="text-center">${item.extension}</td>
-      <td class="text-center">${item.uri}</td>
-      <td class="text-center">${item.domain}</td>
-      <td class="text-center">${item.proxySIP}</td>
-      <td class="text-center">
-        <i class="rounded-1 bi bi-pencil-square mx-3 bg-primary text-light p-1" onclick="openEditModal(${index})"></i>
-        <i class="rounded-1 bi bi-trash3-fill bg-danger text-light p-1" onclick="openDelModal(${index})"></i>
-      </td>
-    `;
-    tableBody.appendChild(row);
-  });
-}
+        if (!res.ok) throw new Error("Erro ao buscar domínios.");
 
-// Função para adicionar novo elemento na tabela
-
-function insertNew() {
-  const addButton = document.getElementById("addButton");
-
-  addButton.addEventListener("click", () => {
-    const extension = document.getElementById("ext-id").value;
-    const addr = document.getElementById("address-domain").value;
-    const uri = document.getElementById("uri-register").value;
-    const proxySIP = document.getElementById("ext-proxyserver").value;
-    const passwd = document.getElementById("ext-passwd").value;
-
-    if (extension && addr && uri && proxySIP) {
-      data.push({
-        extension: extension,
-        domain: addr,
-        uri: uri,
-        proxySIP: proxySIP,
-        password: passwd
-      });
-
-      // Atualizar tabela
-      populateTable();
-
-      document.getElementById("ext-id").value = "";
-      document.getElementById("address-domain").value = "";
-      document.getElementById("uri-register").value = "";
-      document.getElementById("ext-proxyserver").value = "";
+        const domains = await res.json();
+        console.log(domains)
+        populateDomainSelect(domains);
+    } catch (error) {
+        showToast("Erro ao carregar domínios.", "danger");
     }
-    else alert("Por favor, preencha todos os campos antes de adicionar.");
-  });
 }
 
-// Pedir confirmação antes do elemento ser excluído
+// Fetch inicial
+async function fetchData() {
+    try {
+        const res = await fetch("/api/extensions", {
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
 
-function openDelModal(index) {
-  const delModal = new bootstrap.Modal(document.getElementById("deleteModal"));
-  delModal.show();
-
-  const confirmDeleteButton = document.getElementById("confirmDelete");
-  confirmDeleteButton.onclick = () => {
-    deleteRow(index);
-    delModal.hide();
-  };
+        data = await res.json();
+        populateTable();
+    } catch (err) {
+        showToast("Erro ao carregar dados.", "danger");
+    }
 }
 
-// Remove uma linha da tabela com base no ID do elemento
-function deleteRow(index) {
-  data.splice(index, 1);
-  populateTable();
+// Envia uma nova extensão para a API
+async function sendResponse() {
+    const extensionData = getFormData();
+
+    if (!extensionData) return;
+
+    try {
+        const response = await fetch("/api/extensions", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(extensionData),
+        });
+
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || "Erro desconhecido");
+
+        showToast("Extensão adicionada com sucesso!", "success-emphasis");
+        await fetchData();
+    } catch (error) {
+        showToast("Erro ao criar extensão", "danger");
+    }
 }
 
-// Função para abrir o modal de edição de um item, pelo índice
+function getFormData() {
+    const extId = document.getElementById("extension").value.trim();
+    const uri = document.getElementById("uri").value.trim();
+    const domain = document.getElementById("domain").value.trim();
+    const proxySipServer = document.getElementById("proxySIP").value.trim();
+    const extPasswd = document.getElementById("passwd").value.trim();
+
+    if (!extId || !uri || !domain || !proxySipServer || !extPasswd) {
+        showToast("Preencha todos os campos.");
+        return null;
+    }
+    return { extId, uri, domain, proxySipServer, extPasswd };
+}
+
+// Popula a tabela
+function populateTable() {
+    const tableBody = document.querySelector("tbody");
+    tableBody.innerHTML = "";
+
+    data.forEach((item, index) => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <th scope="row" class="text-center">${item.id}</th>
+            <td class="text-center">${sanitize(item.extId)}</td>
+            <td class="text-center">${sanitize(item.uri)}</td>
+            <td class="text-center">${sanitize(item.domain.address)}</td>
+            <td class="text-center">${sanitize(item.proxySipServer)}</td>
+            <td class="text-center">
+                <i class="rounded-1 bi bi-pencil-square mx-3 bg-primary text-light p-1" data-index="${index}" id="edit-${item.id}"></i>
+                <i class="rounded-1 bi bi-trash3-fill bg-danger text-light p-1" data-index="${index}" id="delete-${item.id}"></i>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
+
+    addEventListeners();
+}
+
+// Sanitização básica
+function sanitize(str) {
+    const div = document.createElement("div");
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+// Listeners para edição e exclusão
+function addEventListeners() {
+    const editIcons = document.querySelectorAll('[id^="edit-"]');
+    const deleteIcons = document.querySelectorAll('[id^="delete-"]');
+
+    editIcons.forEach(icon => {
+        icon.addEventListener("click", function () {
+            const index = this.getAttribute('data-index');
+            openEditModal(index);
+        });
+    });
+
+    deleteIcons.forEach(icon => {
+        icon.addEventListener("click", function () {
+            const index = this.getAttribute('data-index');
+            openDelModal(index);
+        });
+    });
+
+    document.getElementById("saveEdit").addEventListener("click", saveEditChanges);
+    document.getElementById("confirmDelete").addEventListener("click", deleteExtension);
+}
+
 function openEditModal(index) {
-  const entry = data[index];
-  document.getElementById("editExtension").value = entry.extension;
-  document.getElementById("editDomain").value = entry.domain;
-  document.getElementById("editURI").value = entry.uri;
-  document.getElementById("editProxy").value = entry.proxySIP;
+    const item = data[index];
 
-  document.getElementById("saveEdit").onclick = () => saveEdit(index);
-  const editModal = new bootstrap.Modal(document.getElementById("editModal"));
-  editModal.show();
+    document.getElementById("editExtension").value = item.extId;
+    document.getElementById("editUri").value = item.uri;
+    document.getElementById("editDomain").value = item.domain.address;
+    document.getElementById("editProxySIP").value = item.proxySipServer;
+    document.getElementById("editPasswd").value = item.extPasswd;
+
+    const saveEditButton = document.getElementById("saveEdit");
+
+    if (saveEditButton) {
+        saveEditButton.setAttribute("data-id", item.id);
+    }
+
+    const editModal = new bootstrap.Modal(document.getElementById("editModal"));
+    editModal.show();
 }
 
-// Função para salvar as alterações feitas no modal de edição
-function saveEdit(index) {
-  const updatedExtension = document.getElementById("editExtension").value;
-  const updatedDomain = document.getElementById("editDomain").value;
-  const updatedURI = document.getElementById("editURI").value;
-  const updatedProxy = document.getElementById("editProxy").value;
-  const updatedPassword = document.getElementById("editPasswd").value;
+// Salvar edição
+async function saveEditChanges() {
+    const id = document.getElementById("saveEdit").getAttribute("data-id");
 
-  if (updatedExtension && updatedURI && updatedDomain && updatedProxy) {
-    data[index] = {
-      extension: updatedExtension,
-      uri: updatedURI,
-      domain: updatedDomain,
-      proxySIP: updatedProxy,
-      password: updatedPassword
-    };
+    const extId = document.getElementById("editExtension").value.trim();
+    const uri = document.getElementById("editUri").value.trim();
+    const domain = document.getElementById("editDomain").value.trim();
+    const proxySipServer = document.getElementById("editProxySIP").value.trim();
+    const extPasswd = document.getElementById("editPasswd").value.trim();
 
-    populateTable();
-    bootstrap.Modal.getInstance(document.getElementById("editModal")).hide();
-  }
+    if (!extId || !uri || !domain || !proxySipServer || !extPasswd) {
+        showToast("Preencha todos os campos.", "warning");
+        return;
+    }
+
+    const updatedExtension = { extId, uri, domain, proxySipServer, extPasswd };
+
+    try {
+        const response = await fetch(`/api/extensions/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatedExtension),
+        });
+
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || "Erro ao atualizar extensão.");
+
+        bootstrap.Modal.getInstance(document.getElementById("editModal")).hide();
+        showToast("Extensão atualizada com sucesso!", "success-emphasis");
+
+        await fetchData();
+    } catch (error) {
+        showToast("Erro ao atualizar extensão", "danger");
+    }
 }
 
-populateTable();
-insertNew()
+// Modal de exclusão
+function openDelModal(index) {
+    const item = data[index];
+    document.getElementById("confirmDelete").setAttribute("data-id", item.id);
+
+    const delModal = new bootstrap.Modal(document.getElementById("deleteModal"));
+    delModal.show();
+}
+
+// Deletar extensão
+async function deleteExtension() {
+    const id = document.getElementById("confirmDelete").getAttribute("data-id");
+
+    try {
+        const response = await fetch(`/api/extensions/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) throw new Error(result.error || "Erro ao deletar extensão.");
+
+        bootstrap.Modal.getInstance(document.getElementById("deleteModal")).hide();
+        showToast("Ramal excluído com sucesso!", "success-emphasis");
+
+        await fetchData();
+    } catch (error) {
+        showToast("Erro ao excluir ramal", "danger");
+    }
+}
+
+document.getElementById("addButton").addEventListener("click", sendResponse);
+
+// Inicialização
+fetchDomains().then(fetchData); 

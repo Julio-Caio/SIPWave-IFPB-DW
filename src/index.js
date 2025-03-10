@@ -7,7 +7,6 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
 import dotenv from 'dotenv';
-import seedDatabase from './services/seedDatabase.js';
 
 dotenv.config();
 
@@ -23,9 +22,10 @@ server.use(morgan('dev'));
 // CORS Configuration
 server.use(
   cors({
-    origin: '*',
-    methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
+    origin: 'http://localhost:3001',
+    methods: 'GET,HEAD,OPTIONS,PUT,POST,DELETE',
     allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
   })
 );
 
@@ -39,8 +39,6 @@ server.use('/public/css', express.static(path.join(__dirname, '../public/css')))
 server.use('/public/global_styles', express.static(path.join(__dirname, '../public/global_styles')));
 server.use('/public/images', express.static(path.join(__dirname, '../public/images')));
 
-// Testar conexão com banco
-
 // Main routes
 server.use(router);
 
@@ -53,6 +51,6 @@ server.listen(PORT, HOST, () => {
   console.log(`\nApp is listening on http://${HOST}:${PORT}`);
 });
 
-seedDatabase()
+//seedDatabase()
 
 export default server;

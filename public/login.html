@@ -22,6 +22,12 @@
   </head>
 
   <body>
+    <style>
+      .text-bg-success-emphasis {
+        background-color: #bcd6ca;
+        color: #0f5132;
+      }
+    </style>
     <header>
       <nav class="navbar navbar-expand-lg bg-dark">
         <div class="container-fluid">
@@ -73,7 +79,12 @@
 
     <div class="container">
       <h1 class="fs-1 text-center p-3 mt-2">Welcome back,</h1>
-      <form class="form-signin mt-3">
+      <form
+        id="loginForm"
+        class="form-signin mt-3"
+        action="/auth/signin"
+        method="post"
+      >
         <fieldset>
           <img
             class="mb-4"
@@ -100,17 +111,35 @@
             class="form-control mb-3 mt-3"
             placeholder="Password"
           />
-
+          <div
+            class="toast align-items-center border-0"
+            id="toast"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+            data-bs-autohide="false"
+            style="position: fixed; bottom: 20px; right: 20px; z-index: 9999"
+          >
+            <div class="d-flex">
+              <div class="toast-body" id="toastMessage"></div>
+              <button
+                type="button"
+                class="btn-close me-2 m-auto"
+                data-bs-dismiss="toast"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
           <a href="/signup" class="link-custom">Don't you have an account?</a>
           <button type="submit" class="btn btn-signup">Login</button>
         </fieldset>
       </form>
     </div>
     <!--Footer-->
-    <footer class="bg-dark justify-content-center">
-      <p class="fw-bold">&copy; SIPWave Project</p>
+    <footer class="bg-dark justify-content-center mt-4 py-3">
+      <p class="fs-5">&copy; 2024 <span class="text-success fw-bold mx-3">SIPWave Project</span> All rights reserved.</p>
     </footer>
-    <script src="index.js"></script>
+
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
       integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
