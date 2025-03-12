@@ -89,12 +89,8 @@ router.post(
 
       return res.status(201).json({ message: "User successfully registered" });
     } catch (error) {
-      // Check for duplication error (for Prisma)
-      if (error.code === "P2002") {
-        return res.status(409).json({ error: "Email is already registered!" });
-      }
-      console.error("Error during user creation:", error);
-      return res.status(500).json({ error: "Internal server error" });
+        console.error("Error during user creation:", error);
+        return res.status(500).json({ error: "Internal server error" });
     }
   })
 );
@@ -107,10 +103,8 @@ router.post("/auth/signin", validateUserInput, async (req, res) => {
     const validUser = await userIsValid(email, password);
 
     if (!validUser.exists) {
-      res.status(401).json({ message: "Incorrect username or password" });
+      return res.status(401).json({ message: "Incorrect username or password" });
     }
-
-    console.log(process.env.JWT_SECRET);
 
     const token = jwt.sign(
       { userId: validUser.user.id, email: validUser.user.email },
@@ -124,16 +118,21 @@ router.post("/auth/signin", validateUserInput, async (req, res) => {
       sameSite: "Strict",
     });
 
-    res.status(200).redirect("/domains");
+    return res.status(200).json({ message: "Login bem-sucedido, redirecionando..." });
   } catch (error) {
     console.error("Error during user login:", error);
     return res.status(500).json({ error: "Internal server error" });
   }
 });
 
-router.post("/logout", function (req, res) {
-  res.clearCookie("token");
-  res.json({ auth: false, token: null });
+router.post("/sign-out", function (req, res) {
+  try {
+    res.clearCookie("jwt", { httpOnly: true, sameSite: "Strict" });
+    res.status(200).json({message: "Log-out bem sucedido!"});
+  } catch (error) {
+    console.error("Erro ao efetuar o log-out!", error)
+    return res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 // Route for extensions
@@ -355,7 +354,7 @@ router.delete(
 );
 
 router.use((req, res) => {
-  res.status(404).send("Page not found");
+  res.status(404).redirect('/404-not-found')
 });
 
 export default router;

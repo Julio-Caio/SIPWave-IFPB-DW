@@ -1,6 +1,9 @@
 import jwt from "jsonwebtoken";
 import UserModel from "../models/User.js";
 import bcrypt from "bcryptjs";
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 export const isAuthenticated = (req, res, next) => {
   const token = req.cookies.jwt;
@@ -19,7 +22,8 @@ export const isAuthenticated = (req, res, next) => {
 };
 
 export async function hashPassword(password) {
-  const salt = await bcrypt.genSalt(10);
+  const saltRounds = parseInt(process.env.BCRYPT_SALT, 10);
+  const salt = await bcrypt.genSalt(saltRounds);
   return bcrypt.hash(password, salt);
 }
 

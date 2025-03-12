@@ -1,6 +1,6 @@
-import { showToast } from './toastMessage.js';
+import { showToast } from './toastMessage.js'
 
-document.getElementById("signupForm").addEventListener("submit", async function (event) {
+document.getElementById("loginForm").addEventListener("submit", async function (event) {
     event.preventDefault();
 
     let isValid = true;
@@ -9,7 +9,6 @@ document.getElementById("signupForm").addEventListener("submit", async function 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     let emailError = document.getElementById("emailError");
 
-    // Validação do email
     if (!emailRegex.test(emailField.value)) {
         isValid = false;
         if (!emailError) {
@@ -25,19 +24,16 @@ document.getElementById("signupForm").addEventListener("submit", async function 
         }
     }
 
-    // Envia a solicitação de signup
     try {
-        const response = await fetch('/auth/signup', {
+        const response = await fetch('/auth/signin', {
             method: 'POST',
             credentials: 'include',
             headers: { 
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                username: document.getElementById('username').value,
                 email: document.getElementById('email').value,
                 password: document.getElementById('password').value,
-                repeatpassword: document.getElementById('repeatpassword').value,
             }),
         });
 
@@ -49,17 +45,14 @@ document.getElementById("signupForm").addEventListener("submit", async function 
         }
 
         if (response.ok) {
-            showToast(data.message || "Cadastrado com sucesso!", "success");
+            showToast(data.message || "Login bem-sucedido!", "success");
 
+            // Após 3 segundos, redireciona para a página de domínios
             setTimeout(() => {
-                window.location.href = "/login";
-            }, 2000);
+                window.location.href = "/domains";
+            }, 3000);
         } else {
-            if (response.status === 409) {
-                showToast("Este usuário já está cadastrado. Tente outro.", "danger");
-            } else {
-                showToast(data.message || data.error || "Erro desconhecido", "danger");
-            }
+            showToast(data.message || data.error || "Erro desconhecido", "danger");
         }
     } catch (error) {
         showToast("Erro ao processar a solicitação.", "danger");

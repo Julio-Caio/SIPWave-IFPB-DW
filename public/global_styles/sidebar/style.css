@@ -73,6 +73,21 @@
   font-weight: 600;
 }
 
+.text-bg-success-emphasis {
+  background-color: #bcd6ca;
+  color: #0f5132;
+}
+
+#log-out {
+  cursor: pointer;
+  color: whitesmoke
+}
+
+#log-out:hover {
+  color: black
+}
+
+
 #main {
   transition: margin-left 0.5s;
   padding: 16px;

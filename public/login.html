@@ -55,7 +55,7 @@
           <div class="collapse navbar-collapse" id="navbarMenu">
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/admin/dashboard"
+                <a class="nav-link" aria-current="page" href="/dashboard"
                   >Dashboard</a
                 >
               </li>
@@ -78,7 +78,27 @@
     </header>
 
     <div class="container">
-      <h1 class="fs-1 text-center p-3 mt-2">Welcome back,</h1>
+      <h1 class="fs-1 text-center p-3 mt-2">Welcome back</h1>
+      <div
+            class="toast align-items-center border-0"
+            id="toast"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+            data-bs-autohide="false"
+            style="position: fixed; bottom: 20px; right: 20px; z-index: 9999"
+          >
+            <div class="d-flex">
+              <div class="toast-body" id="toastMessage"></div>
+              <button
+                type="button"
+                class="btn-close me-2 m-auto"
+                data-bs-dismiss="toast"
+                aria-label="Close"
+              ></button>
+            </div>
+      </div>
+
       <form
         id="loginForm"
         class="form-signin mt-3"
@@ -97,7 +117,7 @@
           <input
             type="email"
             name="email"
-            id="inputEmail"
+            id="email"
             required
             class="form-control mb-3"
             placeholder="E-mail"
@@ -105,31 +125,12 @@
           <input
             type="password"
             name="password"
-            id="inputPassword"
+            id="password"
             required
             minlength="6"
             class="form-control mb-3 mt-3"
             placeholder="Password"
           />
-          <div
-            class="toast align-items-center border-0"
-            id="toast"
-            role="alert"
-            aria-live="assertive"
-            aria-atomic="true"
-            data-bs-autohide="false"
-            style="position: fixed; bottom: 20px; right: 20px; z-index: 9999"
-          >
-            <div class="d-flex">
-              <div class="toast-body" id="toastMessage"></div>
-              <button
-                type="button"
-                class="btn-close me-2 m-auto"
-                data-bs-dismiss="toast"
-                aria-label="Close"
-              ></button>
-            </div>
-          </div>
           <a href="/signup" class="link-custom">Don't you have an account?</a>
           <button type="submit" class="btn btn-signup">Login</button>
         </fieldset>
@@ -139,7 +140,7 @@
     <footer class="bg-dark justify-content-center mt-4 py-3">
       <p class="fs-5">&copy; 2024 <span class="text-success fw-bold mx-3">SIPWave Project</span> All rights reserved.</p>
     </footer>
-
+    <script type="module" src="js/signin.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
       integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
