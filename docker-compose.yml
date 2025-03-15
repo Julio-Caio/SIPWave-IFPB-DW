@@ -6,16 +6,28 @@ services:
     container_name: sipwave_db
     restart: unless-stopped
     ports:
-      - "5432:5432" 
+      - "5432:5432"
     networks:
-      - backing-services
+      - sipwave_network
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB} 
+      POSTGRES_USER: ${POSTGRES_USER} 
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD} 
+
+  asterisk:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: asterisk
+    ports:
+      - "5060:5060/udp"
+      - "8089:8089" # wss (WebSocket)
     volumes:
-      - /tmp:/var/lib/postgresql/data
-    environment: 
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      - ./asterisk/output:/var/log/asterisk
+    networks:
+      - sipwave_network
+    restart: always
 
 networks:
-  backing-services:
+  sipwave_network:
     driver: bridge
