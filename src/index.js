@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
 import dotenv from 'dotenv';
+import { rwAsteriskConf } from './config/sipConfig.js';
 
 dotenv.config();
 
@@ -51,6 +52,6 @@ server.listen(PORT, HOST, () => {
   console.log(`\nApp is listening on http://${HOST}:${PORT}`);
 });
 
-//seedDatabase()
+rwAsteriskConf()
 
 export default server;

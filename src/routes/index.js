@@ -12,6 +12,7 @@ import {
   userIsValid,
 } from "../middleware/auth.js";
 import dotenv from "dotenv";
+//import { generateSipConfFile } from "../config/sipConfig.js";
 
 dotenv.config();
 
@@ -210,6 +211,8 @@ router.post(
           extPasswd,
           domainId: numeric_domain,
         });
+        // Cadastrar o novo ramal no arquivo conf do Asterisk
+        await generateSipConfFile();
 
         res.status(201).json(newExtension);
       }

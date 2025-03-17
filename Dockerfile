@@ -28,7 +28,7 @@ COPY ./asterisk/config/asterisk-22-current.tar.gz .
 
 # Extrair e compilar o Asterisk
 RUN tar -xvzf asterisk-22-current.tar.gz && \
-    cd asterisk-22.* && \
+    cd asterisk-22.2 && \
     contrib/scripts/get_mp3_source.sh && \
     ./configure && \
     make menuselect.makeopts && \
@@ -42,7 +42,7 @@ RUN tar -xvzf asterisk-22-current.tar.gz && \
 RUN mkdir -p /var/log/asterisk /var/run/asterisk /etc/asterisk /var/spool/asterisk
 
 # Expor portas comuns do Asterisk
-EXPOSE 5060/udp 5060/tcp 8088/tcp 10000-20000:10000-20000/udp
+EXPOSE 8088/tcp 10000-20000:10000-20000/udp
 
 # Comando para iniciar o Asterisk no modo foreground
 CMD ["asterisk", "-f"]
