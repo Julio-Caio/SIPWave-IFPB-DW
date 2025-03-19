@@ -97,7 +97,7 @@
           <input
             type="email"
             name="email"
-            id="inputEmail"
+            id="email"
             required
             class="form-control mb-3"
             placeholder="E-mail"
@@ -105,7 +105,7 @@
           <input
             type="password"
             name="password"
-            id="inputPassword"
+            id="password"
             required
             minlength="6"
             class="form-control mb-3 mt-3"
@@ -120,8 +120,8 @@
             data-bs-autohide="false"
             style="position: fixed; bottom: 20px; right: 20px; z-index: 9999"
           >
+          <div class="toast-body" id="toastMessage"></div>
             <div class="d-flex">
-              <div class="toast-body" id="toastMessage"></div>
               <button
                 type="button"
                 class="btn-close me-2 m-auto"
@@ -137,9 +137,13 @@
     </div>
     <!--Footer-->
     <footer class="bg-dark justify-content-center mt-4 py-3">
-      <p class="fs-5">&copy; 2024 <span class="text-success fw-bold mx-3">SIPWave Project</span> All rights reserved.</p>
+      <p class="fs-5">
+        &copy; 2024
+        <span class="text-success fw-bold mx-3">SIPWave Project</span> All
+        rights reserved.
+      </p>
     </footer>
-
+    <script type="module" src="js/login.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
       integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

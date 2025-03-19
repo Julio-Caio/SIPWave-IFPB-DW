@@ -1,39 +1,10 @@
 import { exec } from "child_process";
-import ExtensionModel from "../models/Extension.js";
 
-export async function rwAsteriskConf() {
+export async function rwAsteriskConf(extension,passwd,domain) {
   try {
-    const extensions = await ExtensionModel.getAll();
-
-    let config = `[general]
-context=default
-allowguest=no
-canreinvite=no
-nat=yes
-srvlookup=yes
-\n`;
-
-    extensions.forEach((ext) => {
-      config += `
-[${ext.extId}]
-type=friend
-username=${ext.extId}
-secret=${ext.extPasswd}
-host=dynamic
-context=default
-disallow=all
-allow=ulaw
-qualify=yes
-nat=yes
-callerid="${ext.extId}" <${ext.extId}>
-domain=${ext.domain?.name || "default-domain"}
-\n`;
-    });
-
-    // Usando o comando docker exec para escrever no arquivo extensions.conf
-    const command = `docker exec -i asterisk bash -c "echo \\"${config}\\" >> /etc/asterisk/extensions.conf"`;
-
-    // Executar comando para adicionar configurações no extensions.conf
+    // Comando para adicionar as configurações no arquivo extensions.conf dentro do container Asterisk
+    const command = `docker exec asterisk add_ramal.sh ${extension} ${passwd} ${domain}`;
+    // Executar o comando para adicionar configurações ao extensions.conf no container
     exec(command, (error, stdout, stderr) => {
       if (error) {
         console.error(`❌ Erro ao adicionar configuração ao Asterisk: ${error.message}`);
@@ -57,6 +28,6 @@ domain=${ext.domain?.name || "default-domain"}
       });
     });
   } catch (err) {
-    console.error("Erro ao gerar sip.conf ou recarregar Asterisk:", err);
+    console.error("Erro ao gerar ou recarregar Asterisk:", err);
   }
 }

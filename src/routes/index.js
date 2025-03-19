@@ -1,4 +1,5 @@
 import express from "express";
+
 import rateLimit from "express-rate-limit";
 import { body, validationResult } from "express-validator";
 import UserModel from "../models/User.js";
@@ -11,24 +12,18 @@ import {
   isAuthenticated,
   userIsValid,
 } from "../middleware/auth.js";
+
 import dotenv from "dotenv";
-//import { generateSipConfFile } from "../config/sipConfig.js";
+import { rwAsteriskConf } from "../config/sipConfig.js";
 
 dotenv.config();
 
 const router = express.Router();
 
-class HTTPError extends Error {
-  constructor(message, code = 400) {
-    super(message);
-    this.code = code;
-  }
-}
-
 // Rate Limiting
 const limiter = rateLimit({
   windowMs: 30 * 60 * 1000, // 30 minutes
-  max: 100,
+  max: 200,
   message: "Too many requests, please try again later.",
 });
 
@@ -108,7 +103,9 @@ router.post("/auth/signin", validateUserInput, async (req, res) => {
     const validUser = await userIsValid(email, password);
 
     if (!validUser.exists) {
-      res.status(401).json({ message: "Incorrect username or password" });
+      return res
+        .status(401)
+        .json({ message: "Incorrect username or password" });
     }
 
     console.log(process.env.JWT_SECRET);
@@ -125,16 +122,24 @@ router.post("/auth/signin", validateUserInput, async (req, res) => {
       sameSite: "Strict",
     });
 
-    res.status(200).redirect("/domains");
+    return res
+      .status(200)
+      .json({ message: "Login bem-sucedido, redirecionando..." });
   } catch (error) {
     console.error("Error during user login:", error);
     return res.status(500).json({ error: "Internal server error" });
   }
 });
 
-router.post("/logout", function (req, res) {
-  res.clearCookie("token");
-  res.json({ auth: false, token: null });
+// Rota de Logout
+router.post("/sign-out", function (req, res) {
+  try {
+    res.clearCookie("jwt", { httpOnly: true, sameSite: "Strict" });
+    res.status(200).json({ message: "Log-out bem sucedido!" });
+  } catch (error) {
+    console.error("Erro ao efetuar o log-out!", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 // Route for extensions
@@ -211,8 +216,12 @@ router.post(
           extPasswd,
           domainId: numeric_domain,
         });
-        // Cadastrar o novo ramal no arquivo conf do Asterisk
-        await generateSipConfFile();
+
+        const domain = await DomainModel.getDomainById(numeric_domain);
+        // Adicionar ramais no arquivo pjsip.conf e extensions
+        console.log(numeric_extId, extPasswd, domain.address);
+
+        await rwAsteriskConf(numeric_extId, extPasswd, domain.address);
 
         res.status(201).json(newExtension);
       }
@@ -357,8 +366,86 @@ router.delete(
   })
 );
 
+router.put(
+  "/api/users/:userId/assign-extension",
+  asyncHandler(async (req, res) => {
+    const { userId } = req.params;
+    const { extensionId } = req.body;
+
+    // Verifica se o usuário existe
+    const user = await UserModel.findUserById(parseInt(userId, 10));
+    console.log(user);
+    if (!user) {
+      return res.status(404).json({ error: "Usuário não encontrado!" });
+    }
+    // Verifica se a extensão existe
+    const extension = await ExtensionModel.getExtensionById(
+      parseInt(extensionId, 10)
+    );
+    if (!extension) {
+      return res.status(404).json({ error: "Extensão não encontrada!" });
+    }
+
+    // Atualiza o usuário com o ID da extensão
+    const updatedUser = await UserModel.assignExtensionToUser(userId, {
+      extensionId: parseInt(extensionId, 10),
+    });
+
+    res
+      .status(200)
+      .json({
+        message: "Extensão atribuída com sucesso ao usuário!",
+        user: updatedUser,
+      });
+  })
+);
+
+/* router.post("/api/call", asyncHandler(async (req, res) => {
+  const { from, to } = req.body;
+
+  const userAgent = new SIP.UserAgent({
+    uri: `sip:${from}@ifpb.local`,
+    transportOptions: {
+      server: 'ws://127.0.0.1:8089/ws'
+    },
+    authorizationUsername: from,
+    authorizationPassword: '1234'
+  });
+
+  try {
+    await userAgent.start();
+    console.log(`Registered with Asterisk server for extension ${from}`);
+
+    const session = userAgent.invite(`sip:${to}@ifpb.local`, {
+      sessionDescriptionHandlerOptions: {
+        constraints: {
+          audio: true, 
+          video: false // Desabilita vídeo
+        }
+      }
+    });
+
+    session.on('progress', () => {
+      console.log('Call in progress');
+    });
+
+    session.on('accepted', () => {
+      console.log('Call accepted');
+    });
+
+    session.on('terminated', () => {
+      console.log('Call terminated');
+    });
+
+    res.status(200).json({ message: 'Call initiated successfully!' });
+  } catch (error) {
+    console.error('Error making call:', error);
+    res.status(500).json({ error: 'Internal server error while making call' });
+  }
+})); */
+
 router.use((req, res) => {
-  res.status(404).send("Page not found");
+  res.status(404).redirect("/404-not-found");
 });
 
 export default router;

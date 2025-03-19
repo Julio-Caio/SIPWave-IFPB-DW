@@ -45,6 +45,61 @@ Hello, Dev! How are things going? Have you had your little coffee today?
 
 [![Linkedin Badge](https://img.shields.io/badge/-Júlio-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/julio-caio-r-santos)](https://www.linkedin.com/in/julio-caio-r-santos) [![Gmail Badge](https://img.shields.io/badge/-julio.caio@academico.ifpb.edu.br-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:caio.julio@academico.ifpb.edu.br)](mailto:caio.julio@academico.ifpb.edu.br)
 
-<a href="https://github.com/camillypsouza"><b>Camilly Souza</b></a>
+Claro! Aqui está o trecho do `README.md` traduzido para o inglês com os comandos em bash organizados passo a passo:
 
-[![Linkedin Badge](https://img.shields.io/badge/-Camilly-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/camilly-pinto-de-souza-22ab28280)](https://www.linkedin.com/in/camilly-pinto-de-souza-22ab28280) [![Gmail Badge](https://img.shields.io/badge/-camilly.pinto@academico.ifpb.edu.br-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:julio.caio@academico.ifpb.edu.br)](mailto:camilly.pinto@academico.ifpb.edu.br)
+---
+
+### 📦 Getting Started
+
+1. **Set your environment variables**
+
+   First, define your environment variables by either creating a new `.env` file or renaming the provided `.env.example` file:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+   Then, edit the `.env` file to customize the variables according to your environment.
+
+2. **Start the containers**
+
+   In the project root directory, run the following command to build and start the containers:
+
+   ```bash
+   docker-compose up -d --build
+   ```
+
+   This will spin up two containers:
+   - **PostgreSQL**: used to store user data, domains, and extensions.
+   - **Asterisk**: where we will later implement features for handling calls and managing active calls via the dashboard.
+
+   Make sure both containers are running correctly.
+
+3. **Install project dependencies**
+
+   Next, install all the required dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. **Apply database migrations**
+
+   Go to the `src/` directory and run the following command to generate the database tables using Prisma:
+
+   ```bash
+   cd src/
+   npx prisma migrate dev
+   ```
+
+   ⚠️ Make sure there are no errors during this process.
+
+5. **Start the development server**
+
+   Finally, run the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+---

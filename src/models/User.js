@@ -54,6 +54,12 @@ class UserModel {
     }
   }
 
+  static async findUserById(userId) {
+    return await prisma.user.findUnique({
+      where: { id: Number(userId) }
+    });
+  };
+
   static async userExists(email) {
     try {
       const user = await prisma.user.findUnique({
@@ -68,14 +74,19 @@ class UserModel {
     }
   }
 
-  static async assignExtensionToUser(userId, extensionId) {
+  static async assignExtensionToUser(userId, { extensionId }) {
     try {
-      return await prisma.user.update({
-        where: { id: userId },
-        data: { extensionId: extensionId },
+      const updatedUser = await prisma.user.update({
+        where: { id: parseInt(userId, 10) },
+        data: {
+          extension: {
+            connect: { id: extensionId }
+          }
+        }
       });
+      return updatedUser;
     } catch (error) {
-      console.error("Error assigning extension to user:", error);
+      console.error("Erro detectado:", error);
       throw new Error("Failed to assign extension");
     }
   }

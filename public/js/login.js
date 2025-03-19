@@ -1,4 +1,6 @@
-document.getElementById("signupForm").addEventListener("submit", async function (event) {
+import { showToast } from "./toastMessage.js";
+
+document.getElementById("loginForm").addEventListener("submit", async function (event) {
     event.preventDefault();
 
     const emailField = document.getElementById("email");
@@ -20,17 +22,15 @@ document.getElementById("signupForm").addEventListener("submit", async function 
     }
 
     try {
-        const response = await fetch('/auth/signup', {
+        const response = await fetch('/auth/signin', {
             method: 'POST',
             credentials: 'include',
             headers: { 
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                username: document.getElementById('username').value,
                 email: document.getElementById('email').value,
                 password: document.getElementById('password').value,
-                repeatpassword: document.getElementById('repeatpassword').value,
             }),
         });
 
@@ -42,17 +42,19 @@ document.getElementById("signupForm").addEventListener("submit", async function 
         }
 
         if (response.ok) {
-            alert("Cadastro bem-sucedido!");
+            // Exibe o toast de sucesso
+            showToast(data.message || "Login bem-sucedido!", "success");
 
             // Após 3 segundos, redireciona para a página de domínios
             setTimeout(() => {
-                window.location.href = "/login";
-            }, 1500);
+                window.location.href = "/domains";
+            }, 3000);
         } else {
-            alert("Não foi possível cadastrar esse usuário!");
+            // Exibe o toast de erro
+            showToast(data.message || data.error || "Erro desconhecido", "danger");
         }
     } catch (error) {
         // Exibe o toast em caso de erro ao processar a solicitação
-        alert("Erro ao processar a solicitação.");
+        showToast("Erro ao processar a solicitação.", "danger");
     }
 });

@@ -4,7 +4,7 @@ FROM debian:bullseye-slim
 # Instalar dependências
 RUN apt-get update && apt-get install -y \
     wget \
-    nano \
+    vim \
     curl \
     gnupg \
     pkg-config \
@@ -25,10 +25,11 @@ WORKDIR /usr/src
 
 # Copiar o arquivo tar.gz para dentro do container
 COPY ./asterisk/config/asterisk-22-current.tar.gz .
+COPY ./asterisk/add_ramal.sh /usr/local/bin
 
 # Extrair e compilar o Asterisk
 RUN tar -xvzf asterisk-22-current.tar.gz && \
-    cd asterisk-22.2 && \
+    cd asterisk-22.* && \
     contrib/scripts/get_mp3_source.sh && \
     ./configure && \
     make menuselect.makeopts && \
@@ -41,8 +42,8 @@ RUN tar -xvzf asterisk-22-current.tar.gz && \
 
 RUN mkdir -p /var/log/asterisk /var/run/asterisk /etc/asterisk /var/spool/asterisk
 
-# Expor portas comuns do Asterisk
-EXPOSE 8088/tcp 10000-20000:10000-20000/udp
+# Expor as portas padrão do Asterisk
+EXPOSE 5060 5061 8089
 
 # Comando para iniciar o Asterisk no modo foreground
 CMD ["asterisk", "-f"]
