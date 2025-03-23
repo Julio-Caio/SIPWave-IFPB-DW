@@ -45,8 +45,6 @@ Hello, Dev! How are things going? Have you had your little coffee today?
 
 [![Linkedin Badge](https://img.shields.io/badge/-Júlio-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/julio-caio-r-santos)](https://www.linkedin.com/in/julio-caio-r-santos) [![Gmail Badge](https://img.shields.io/badge/-julio.caio@academico.ifpb.edu.br-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:caio.julio@academico.ifpb.edu.br)](mailto:caio.julio@academico.ifpb.edu.br)
 
-Claro! Aqui está o trecho do `README.md` traduzido para o inglês com os comandos em bash organizados passo a passo:
-
 ---
 
 ### 📦 Getting Started
